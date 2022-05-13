@@ -1,2 +1,2 @@
 # EasyFly
-Repository del progetto EasyFly, la volontà è quella di sviluppare una web application legata a servizi offerti dal sistema aeroportuale.
+L’idea principale è quella di realizzare una web application in grado di fornire un servizio completo ad ogni individuo riguardo il contesto aeroportuale nazionale.
