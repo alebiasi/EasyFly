@@ -1,4 +1,15 @@
 <!DOCTYPE html>
-<html>
-    
+<!--basic html form to test check-in operation-->
+<!--TODO: add css-->
+<html>   
+    <body>
+        <h3>Check-in form</h3>
+        <form action="/api/v1/requests" method="post">
+            <input type="hidden" name="user_id" value="TEST"/>  <!--TODO: implement cookie for this-->
+            <label>Document id</label><input type="text" name="document_id" required/><br>
+            <label>Booking code</label><input type="text" name="booking_code" required/><br>
+            <label>Number of suitcases</label><input type="number" name="n_cases" required/><br>
+            <input type="submit" name="submit" value="Invia"/>
+        </form>
+    </body>
 </html>
