@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-module.export = mongoose.model("Request", new Schema({
-    person: String,
+module.exports = mongoose.model("Request", new Schema({
+    user_id: String,
     document_id: String,
     booking_code: String,
     n_cases: Number,
