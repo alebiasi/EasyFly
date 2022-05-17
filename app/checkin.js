@@ -26,14 +26,14 @@ router.post("",async function(req,res){
 
     await request.save();   //save the new request
     //res.status(201).send('Post request arrived at server!');    //TODO redirect to correct page
-    var mypath = path.join(__dirname,"../static/accept_page.html");
-    res.sendFile(mypath);
+    //res.location("/accept_page").status(200).send();
+    res.redirect("/accept_page");
     //res.redirect(200,"/accept");    //use res.location
 });
 
-router.use("/accept",function(req,res){
+/*router.use("/accept",function(req,res){
     res.status(200).sendFile("/static/accept_page.html");
-});
+});*/
 /**
  * get all requests
  */

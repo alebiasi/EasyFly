@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const checkin = require("./checkin.js");
 const tokenchecker = require("./tokenchecker.js");
-const accept_page = require("./accept_page.js");
-
+const path = require('node:path');
 /**
  * configure parsing middleware
  */
@@ -25,6 +24,18 @@ app.use("/",express.static("static"));
  * routing
  */
 //app.use("/accept",accept_page);
+app.use("/main_page",function(req,res){
+    var mypath = path.join(__dirname,"../static/main_page.html");
+    res.sendFile(mypath);
+});
+app.use("/checkin",function(req,res){
+    var mypath = path.join(__dirname,"../static/checkin.html");
+    res.sendFile(mypath);
+});
+app.use("/accept_page",function(req,res){
+    var mypath = path.join(__dirname,"../static/accept_page.html");
+    res.sendFile(mypath);
+});
 app.use("/api/v1/requests",checkin);
 
 //insert page not found

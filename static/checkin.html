@@ -1,15 +1,46 @@
 <!DOCTYPE html>
-<!--basic html form to test check-in operation-->
-<!--TODO: add css-->
 <html>   
+    <head>
+        <meta charset="utf-8"/>
+        <title>EasyFly</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='style/style.css'>
+    </head>
     <body>
-        <h3>Check-in form</h3>
-        <form action="/api/v1/requests" method="post">
-            <input type="hidden" name="user_id" value="TEST"/>  <!--TODO: implement cookie for this-->
-            <label>Document id</label><input type="text" name="document_id" required/><br>
-            <label>Booking code</label><input type="text" name="booking_code" required/><br>
-            <label>Number of suitcases</label><input type="number" name="n_cases" required/><br>
-            <input type="submit" name="submit" value="Invia"/>
-        </form>
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="style/Left arrow.png" onclick="redirect_to_main_page"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Check-in</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="style/Vertical dots.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <main>
+            <div class="loginForm">
+                <form action="/api/v1/requests" method="post">
+                    
+                    <input type="hidden" name="user_id" value="TEST"/>  <!--TODO-->
+                    
+                    <div class="inputBox">
+                        <input type="text" name="document_id" class="inputFormat" placeholder="Document id:" required/><br>
+                    </div>
+                    <div class="inputBox">
+                        <input type="text" name="booking_code" class="inputFormat" placeholder="Booking code:" required/><br>
+                    </div>
+                    <div class="inputBox">
+                        <input type="number" name="n_cases" class="inputFormat" placeholder="Number of suitcases:" required/><br>
+                    </div>
+                    <input type="submit" name="submit" class="button" value="Invia"/>
+                </form>
+            </div>
+        </main>
+        
     </body>
 </html>

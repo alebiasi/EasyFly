@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>EasyFly</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='style/style.css'>
+    </head>
+    <body>
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="style/Left arrow.png" onclick="redirect_to_main_page"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Main Page</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="style/Vertical dots.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <main> 
+            <table class="main">
+                <tr class="main">
+                    <td class="main">
+                        <form method="POST" action="/checkin" class="main">
+                            <input type="submit" name="submit_checkin" class="button_main" value="Effettua check-in"/>
+                        </form>
+                    </td>
+                </tr>
+                <tr class="main">
+                    <td class="main">
+                        <form method="POST" action="/main_page" class="main">
+                            <input type="submit" name="submit2" class="button_main" value="Button2"/>
+                        </form>
+                    </td>
+                </tr>
+                <tr class="main">
+                    <td class="main">
+                        <form method="POST" action="/main_page" class="main">
+                            <input type="submit" name="submit3" class="button_main" value="Button3"/>
+                        </form>
+                    </td>
+                </tr>
+                <tr class="main">
+                    <td class="main">
+                        <form method="POST" action="/main_page" class="main">
+                            <input type="submit" name="submit4" class="button_main" value="Button4"/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </main>
+    </body>
+</html>
