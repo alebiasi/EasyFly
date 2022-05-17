@@ -31,19 +31,25 @@
             let li = document.createElement('li');
             let table = document.createElement('table')
 
+            li.className = "flightBox";
+
             let tr = document.createElement('tr');
-            tr.innerHTML += `<td>"${flight.hour}"</td>`;
-            tr.innerHTML += `<td>"${flight.company}"</td>`;
+            tr.innerHTML += `<td><img src="imgs/clock.png" class="flightIcon"/>${flight.hour}</td>`;
+            tr.innerHTML += `<td><img src="imgs/aeroplane.png" class="flightIcon"/>${flight.company}</td>`;
             table.appendChild(tr);
             
             tr = document.createElement('tr');
             tr.innerHTML += `<td></td>`;
-            tr.innerHTML += `<td>"${flight.delay}"</td>`;
+            let delayFormatted = flight.delay == 0 ? "In orario" :  flight.delay < 0 ? "Cancellato" : "Ritardo " + flight.delay + " minuti";
+            let hourClass = flight.delay == 0 ? "green" :  flight.delay < 0 ? "black" : "red";
+            tr.innerHTML += `<td class="${hourClass}"><img src="imgs/comment.png" class="flightIcon"/>${delayFormatted}</td>`;
             table.appendChild(tr);
 
             tr = document.createElement('tr');
-            tr.innerHTML += `<td>"${flight.cod}"</td>`;
-            tr.innerHTML += `<td>"${flight.gate}"</td>`;
+            //tr.innerHTML += `<td><img src="imgs/list.png" class="flightIcon"/><a href="${flight.self}">${flight.cod}</a></td>`;
+            tr.innerHTML += `<td><img src="imgs/list.png" class="flightIcon"/>${flight.cod}</td>`;
+            let gateFormatted = flight.gate != undefined ? "Gate <strong style='color:#395577'>" + flight.gate + "</strong>" : "Gate -";
+            tr.innerHTML += `<td><img src="imgs/walker.png" class="flightIcon"/>${gateFormatted}</td>`;
             table.appendChild(tr);
 
             li.appendChild(table);
