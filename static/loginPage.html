@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>EasyFly</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='loginStyle.css'>
+</head>
+    <body>
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="Left arrow.png"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Login</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="Vertical dots.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <main>
+            <div class="loginText">
+                LOGIN
+            </div>
+            <div class="loginDiv">
+                <form action="api/v1/users" method="post" name="loginForm" id="loginForm">
+                    <div class="inputBox">
+                        <img src="User.png" class="userLogo"/>
+                        <input type="text" class="inputFormat" name="uName" placeholder="Username">
+                    </div>
+                    <br>
+                    <div class="inputBox">
+                        <img src="Lock.png" class="passwordLogo"/>
+                        <input type="password" class="inputFormat" name="uPassword" placeholder="Password"><br>
+                    </div>
+                    <br>
+                    <div class="blueText">
+                        Password dimenticata?
+                    </div>
+                    <br>
+                    <div class="oLine">
+                        <span class="oSymbol">
+                          o
+                        </span>
+                    </div>
+                    <br>
+                    <div class="inputBox">
+                        <img src="Google G.png" class="googleLogo"/>
+                        <input type="text" class="inputFormat" name="uName" placeholder="Entra con Google">
+                    </div>
+                    <br>
+                    <div class="oLine">
+                        <span class="oSymbol">
+                          o
+                        </span>
+                    </div>
+                    <br>
+                    <div class="blueText">
+                        Hai il passaporto?
+                    </div>
+                    <br>
+                    <button type="button" onclick="login()" class="buttonLogin">Accedi</button>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>
+
