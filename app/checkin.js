@@ -2,13 +2,19 @@ const express = require("express");
 const Request = require("./request");
 const util = require("util");
 const router = express.Router();
+const mongoose = require("mongoose");
+const { nextTick } = require("process");
+const path = require('node:path');
 
 router.use(express.json());
 router.use(express.urlencoded());
-//add a request to db
+
+/**
+ * add a request to db
+ */
 router.post("",async function(req,res){ 
+    console.log("post request");
     var datetime = new Date();  //get current date
-    console.log(req.body.user_id+" "+req.body.document_id+" "+req.body.booking_code+" "+req.body.n_cases+" "+datetime);
     let request = new Request({ //create new request object based on data from the user
         user_id:req.body.user_id,
         document_id:req.body.document_id,
@@ -19,15 +25,23 @@ router.post("",async function(req,res){
     })
 
     await request.save();   //save the new request
-    res.status(201).send('Post request arrived at server!');    //TODO redirect to correct page
+    //res.status(201).send('Post request arrived at server!');    //TODO redirect to correct page
+    var mypath = path.join(__dirname,"../static/accept_page.html");
+    res.sendFile(mypath);
+    //res.redirect(200,"/accept");    //use res.location
 });
 
-//get all requests
+router.use("/accept",function(req,res){
+    res.status(200).sendFile("/static/accept_page.html");
+});
+/**
+ * get all requests
+ */
 router.get("",async function(req,res){
     var risposta='{"requests":[';
     var requests = await Request.find();    //get all requests from db
     requests.forEach(element => {   //create json object
-        risposta+='{"user_id":"'+element.user_id+'","document_id":"'+element.document_id+'","booking_code":"'+element.booking_code+'","n_cases":"'+element.n_cases+'","request_time":"'+element.request_time+'","status":"'+element.status+'"},';
+        risposta+='{"_id":"'+element._id+'","user_id":"'+element.user_id+'","document_id":"'+element.document_id+'","booking_code":"'+element.booking_code+'","n_cases":"'+element.n_cases+'","request_time":"'+element.request_time+'","status":"'+element.status+'"},';
     });
     risposta+='{}]}';   
     rispostajson=JSON.parse(risposta);  //parse json object
@@ -35,15 +49,21 @@ router.get("",async function(req,res){
 });
 
 
-//get a specific request
+/**
+ * get a specific request
+ */
 router.get("/:id",async function(req,res){
-    var id = req.params.id; //get id from req
-    var request= await Request.findById(id); //find request on db   
-    console.log(JSON.stringify(request));
-    if(request=={}){    //if the request does not exists, send error 404 
-        res.status(404).send("Request with id "+id+" not found");
-    }else{//else send the json back
-        res.status(200).json(request);
+    var id = req.params.id;
+    try{    //if the given id is not on the correct format mongoose throws an error
+        var mongoid = new mongoose.mongo.ObjectId(id);    //get id from req
+        var request= await Request.findById(mongoid); //find request on db   
+        if(request==null){    //if the request does not exists, send error 404 
+            res.status(404).send("Error id "+id+" not found");
+        }else{//else send the json back
+            res.status(200).json(request);
+        }
+    }catch(error){
+        res.status(404).send("Error id "+id+" not found");
     }
 });
 
@@ -51,14 +71,46 @@ router.post("/:id",function(req,res){
     res.status(504).send("Method not allowed");
 });
 
-//update a specific request
-router.put("/:id",function(req,res){
-    console.log("Put request with id arrived");
+/**
+ * update a specific request
+ */
+router.put("/:id",async function(req,res){
+    var id = req.params.id;
+    try{
+        var mongoid = new mongoose.mongo.ObjectId(id);    //get id from req
+        var status=req.body.status; //get status from body
+        var request = await Request.updateOne({"_id":mongoid},{$set:{"status":status}}); //update entry
+        if(request.acknowledged==false){    //return message
+            res.status(404).send("Error");  //TODO verify correct status code
+        }else{
+            res.status(200).send("Modification success");
+        }
+    }catch(error){
+        res.status(404).send("Error id "+id+" not found");
+    }
+    
+
 });
 
-//delete a specific request
-router.delete("/:id",function(req,res){
-    console.log("Delete request with id arrived");
+/**
+ * delete a specific request
+ */
+router.delete("/:id",async function(req,res){   
+    var id=req.params.id;
+    try{
+        var mongoid = new mongoose.mongo.ObjectId(id);    //get id from req
+        var request = await Request.deleteOne({"_id":mongoid});  //delete entry
+        console.log(request);
+        if(request.acknowledged==false){    //return message
+            res.status(404).send("Error while deleting an entry");
+        }else{
+            res.status(200).send("Delete success");
+        }
+    }catch(error){
+        res.status(404).send("Error id "+id+" not found");
+    }
+    
+    
 });
 
 module.exports = router;
