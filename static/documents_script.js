@@ -60,3 +60,34 @@ function loadDocuments(userId) {
 
 loadBoardingCard("user_123");
 loadDocuments("user_123");
+
+/*
+function saveDocument() {
+    const Document = require('./models/document');
+
+    document.save()
+        .then(() => {
+            console.log('Saved succesfully!')
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+*/
+
+function saveDocument(src) {
+
+    const returnname = document.getElementById("return_name");
+
+    //127.0.0.1:8080/api/v1/save_documents/.%2Fimgs%2Fimg11.jpg
+    
+    fetch('../api/v1/save_documents/'+src)
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) {
+        
+        return returnname.innerHTML = data.newname;
+    })
+    .catch( error => console.error(error) );// If there is any error you will catch them here
+
+
+}

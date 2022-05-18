@@ -126,12 +126,25 @@
             </div>
 
             <h1>Carta d'identità</h1>
-            <img id="id_img" src="imgs/img1.jpg" alt="ID Card" style="width:100%;max-width:300px">
+            <img id="id_img" src="imgs/none.png" alt="ID Card" style="width:100%;max-width:300px"> <br>
+
+            <form action="/api/v1/save_documents" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="document_type" value="0">
+                <input type="file" name="filetoupload"><br>
+                <input type="submit" value="Carica">
+            </form>
+
             
 
             <hr>
             <h1>Passporto</h1>
-            <img id="passport_img" src="imgs/img4.jpg" alt="Passport" style="width:100%;max-width:300px">
+            <img id="passport_img" src="imgs/none.png" alt="Passport" style="width:100%;max-width:300px"> <br>
+
+            <form action="/api/v1/save_documents" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="document_type" value="1">
+                <input type="file" name="filetoupload"><br>
+                <input type="submit" value="Carica">
+            </form>
 
             <hr>
             <h1>Carta d'imbarco</h1>
@@ -214,4 +227,4 @@
     span.onclick = function() { 
       modal.style.display = "none";
     }
-    </script>
+</script>

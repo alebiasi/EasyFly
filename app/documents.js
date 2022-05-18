@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Document = require('./models/document'); // get our mongoose model
+const Document = require('./models/document');
 
 /**
  * Resource representation based on the following the pattern: 

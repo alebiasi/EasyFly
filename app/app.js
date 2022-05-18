@@ -3,6 +3,7 @@ const app = express();
 const flights = require("./flights.js");
 const boarding_cards = require("./boarding_cards.js");
 const documents = require("./documents.js");
+const save_documents = require("./save_documents.js");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -18,6 +19,7 @@ app.use((req,res,next) => {
 app.use("/api/v1/flights", flights);
 app.use("/api/v1/boarding_cards", boarding_cards);
 app.use("/api/v1/documents", documents);
+app.use("/api/v1/save_documents", save_documents);
 
 app.use((req, res) => {
     res.status(404);
