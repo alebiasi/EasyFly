@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Flight = require('./models/flight'); // get our mongoose model
+const Document = require('./models/document'); // get our mongoose model
 
 /**
  * Resource representation based on the following the pattern: 
@@ -8,54 +8,66 @@ const Flight = require('./models/flight'); // get our mongoose model
  */
 router.get('', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.find
-    let flights = await Flight.find({});
-    flights = flights.map( (flight) => {
+    let documents = await Document.find({});
+    documents = documents.map( (document) => {
         return {
-            self: '/api/v1/flights/' + flight.id,
-            cod: flight.cod,
-            hour: flight.hour,
-            company: flight.company,
-            delay: flight.delay,
-            gate: flight.gate
+            self: '/api/v1/documents/' + document.id,
+            uid: document.uid,
+            type: document.type,
+            image_url: document.image_url
         };
     });
-    res.status(200).json(flights);
+    res.status(200).json(documents);
 });
 
+router.get('/:uid', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.find
+    let documents = await Document.find({uid: req.params.uid});
+    documents = documents.map( (document) => {
+        return {
+            self: '/api/v1/documents/' + document.id,
+            uid: document.uid,
+            type: document.type,
+            image_url: document.image_url
+        };
+    });
+    res.status(200).json(documents);
+});
+/*
 router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
-    let flight = await Flight.findById(req.params.id);
+    let document = await Flight.findById(req.params.id);
     res.status(200).json({
-        self: '/api/v1/flights/' + flight.id,
-        cod: flight.cod,
-        hour: flight.hour,
-        company: flight.company,
-        delay: flight.delay,
-        gate: flight.gate
+        self: '/api/v1/documents/' + document.id,
+        cod: document.cod,
+        hour: document.hour,
+        company: document.company,
+        delay: document.delay,
+        gate: document.gate
     });
 });
-
+*/
 router.delete('/:id', async (req, res) => {
-    let flight = await Flight.findById(req.params.id).exec();
-    if (!flight) {
+    let document = await Flight.findById(req.params.id).exec();
+    if (!document) {
         res.status(404).send()
-        console.log('flight not found')
+        console.log('document not found')
         return;
     }
-    await flight.deleteOne()
-    console.log('flight removed')
+    await document.deleteOne()
+    console.log('document removed')
     res.status(204).send()
 });
 
 router.post('', async (req, res) => {
 
-	let flight = new Flight({
+	let document = new Flight({
         title: req.body.title
     });
     
-	flight = await flight.save();
+	document = await document.save();
     
-    let flightId = flight.id;
+    let documentId = document.id;
 
     console.log('Flight saved successfully');
 
@@ -63,7 +75,7 @@ router.post('', async (req, res) => {
      * Link to the newly created resource is returned in the Location header
      * https://www.restapitutorial.com/lessons/httpmethods.html
      */
-    res.location("/api/v1/flights/" + flightId).status(201).send();
+    res.location("/api/v1/documents/" + documentId).status(201).send();
 });
 
 

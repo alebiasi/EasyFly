@@ -1,62 +1,62 @@
 /**
- * This function refresh the list of flights
+ * This function refresh the user boarding_card
  */
- function loadDocuments() {
+function loadBoardingCard(userId) {
 
-    const ul = document.getElementById('flights'); // Get the list where we will place our authors
+    const tableDocuments = document.getElementById('table_documents'); // Get the list where we will place the documents
 
-    ul.innerHTML = '';
-
-    fetch('../api/v1/flights')
+    tableDocuments.innerHTML = '';
+    
+    fetch('../api/v1/boarding_cards/' + userId)
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) { // Here you get the data to modify as you please
         
         // console.log(data);
         
-        return data.map(function(flight) { // Map through the results and for each run the code below
+        return data.map(function(boardingCard) { // Map through the results and for each run the code below
             
+            tableDocuments.innerHTML += `<tr><td>Nome</td><td>${boardingCard.name}</td></tr>`;
+            tableDocuments.innerHTML += `<tr><td>Cognome</td><td>${boardingCard.surname}</td></tr>`;
+            tableDocuments.innerHTML += `<tr><td>Codice volo</td><td>${boardingCard.flight_code}</td></tr>`;
+            tableDocuments.innerHTML += `<tr><td>Data</td><td>${boardingCard.date}</td></tr>`;
+            tableDocuments.innerHTML += `<tr><td>Ora</td><td>${boardingCard.time}</td></tr>`;
+            tableDocuments.innerHTML += `<tr><td>Posto</td><td>${boardingCard.seat}</td></tr>`;
+            tableDocuments.innerHTML += `<tr><td>Entrata</td><td>${boardingCard.entrance}</td></tr>`;
+            tableDocuments.innerHTML += `<tr><td>Chiusura gate</td><td>${boardingCard.gate_close_time}</td></tr>`;
+            tableDocuments.innerHTML += `<tr><td>Ora atterraggio</td><td>${boardingCard.landing_time}</td></tr>`;
 
-            // let bookId = book.self.substring(book.self.lastIndexOf('/') + 1);
-            /*
-            let li = document.createElement('li');
-            let span = document.createElement('span');
-            span.innerHTML = `<a href="${book.self}">${book.title}</a>`;
-            span.innerHTML += `<button type="button" onclick="takeBook('${book.self}')">Take the book</button>`
-            
-            // Append all our elements
-            li.appendChild(span);
-            ul.appendChild(li);
-            */
-
-            let li = document.createElement('li');
-            let table = document.createElement('table')
-
-            li.className = "flightBox";
-
-            let tr = document.createElement('tr');
-            tr.innerHTML += `<td><img src="imgs/clock.png" class="flightIcon"/>${flight.hour}</td>`;
-            tr.innerHTML += `<td><img src="imgs/aeroplane.png" class="flightIcon"/>${flight.company}</td>`;
-            table.appendChild(tr);
-            
-            tr = document.createElement('tr');
-            tr.innerHTML += `<td></td>`;
-            let delayFormatted = flight.delay == 0 ? "In orario" :  flight.delay < 0 ? "Cancellato" : "Ritardo " + flight.delay + " minuti";
-            let hourClass = flight.delay == 0 ? "green" :  flight.delay < 0 ? "black" : "red";
-            tr.innerHTML += `<td class="${hourClass}"><img src="imgs/comment.png" class="flightIcon"/>${delayFormatted}</td>`;
-            table.appendChild(tr);
-
-            tr = document.createElement('tr');
-            //tr.innerHTML += `<td><img src="imgs/list.png" class="flightIcon"/><a href="${flight.self}">${flight.cod}</a></td>`;
-            tr.innerHTML += `<td><img src="imgs/list.png" class="flightIcon"/>${flight.cod}</td>`;
-            let gateFormatted = flight.gate != undefined ? "Gate <strong style='color:#395577'>" + flight.gate + "</strong>" : "Gate -";
-            tr.innerHTML += `<td><img src="imgs/walker.png" class="flightIcon"/>${gateFormatted}</td>`;
-            table.appendChild(tr);
-
-            li.appendChild(table);
-            ul.appendChild(li);
         })
     })
     .catch( error => console.error(error) );// If there is any error you will catch them here
     
 }
-loadDocuments();
+
+function loadDocuments(userId) {
+
+    const idImg = document.getElementById('id_img'); // Get the img where place the id image
+    const passportImg = document.getElementById('passport_img'); // Get the img where place the passport image
+
+    idImg.src = './imgs/none.png';
+    passportImg.src = './imgs/none.png';
+    
+    fetch('../api/v1/documents/' + userId)
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) {
+        
+        // console.log(data);
+        
+        return data.map(function(document) { // Map through the results and for each run the code below
+            
+            if (document.type == 0) {
+                idImg.src = document.image_url;
+            } else {
+                passportImg.src = document.image_url;
+            }
+
+        })
+    })
+    .catch( error => console.error(error) );// If there is any error you will catch them here
+}
+
+loadBoardingCard("user_123");
+loadDocuments("user_123");
