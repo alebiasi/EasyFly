@@ -13,6 +13,7 @@ app.use(express.urlencoded({extended: true}));
  * expose static resources
  */
 app.use("/",express.static("static"));
+app.use("/style",express.static("style"));
 
 /**
  * authentication middleware
@@ -23,17 +24,16 @@ app.use("/",express.static("static"));
 /**
  * routing
  */
-//app.use("/accept",accept_page);
 app.use("/main_page",function(req,res){
     var mypath = path.join(__dirname,"../static/main_page.html");
     res.sendFile(mypath);
 });
 app.use("/checkin",function(req,res){
-    var mypath = path.join(__dirname,"../static/checkin.html");
+    var mypath = path.join(__dirname,"../html_checkin/checkin.html");
     res.sendFile(mypath);
 });
 app.use("/accept_page",function(req,res){
-    var mypath = path.join(__dirname,"../static/accept_page.html");
+    var mypath = path.join(__dirname,"../html_checkin/accept_page.html");
     res.sendFile(mypath);
 });
 app.use("/api/v1/requests",checkin);

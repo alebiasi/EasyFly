@@ -6,7 +6,7 @@ router.use(express.json());
 router.use(express.urlencoded());
 
 router.use("",function(req,res){
-    var mypath = path.join(__dirname,"../static/accept_page.html");
+    var mypath = path.join(__dirname,"../html_checkin/accept_page.html");
     console.log(mypath);
     res.sendFile(mypath);
 });

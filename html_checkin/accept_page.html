@@ -4,20 +4,21 @@
         <meta charset="utf-8"/>
         <title>EasyFly</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <link rel='stylesheet' type='text/css' media='screen' href='style/style.css'>
+        <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
+        <script src="script/script.js"></script>
     </head>
     <body>
         <div class="upBorder">
             <table class="upTable">
                 <tr>
                     <td class="leftArrow">
-                        <img src="style/Left arrow.png" onclick="redirect_to_main_page"/>
+                        <img src="/style/Left arrow.png" id="left_arrow"/>
                     </td>
                     <td class="serviceName">
                         <b>Check-in</b>
                     </td>
                     <td class="verticalDots">
-                        <img src="style/Vertical dots.png"/>
+                        <img src="/style/Vertical dots.png"/>
                     </td>
                 </tr>
             </table>
@@ -32,3 +33,8 @@
         </main>
     </body>
 </html>
+<script>
+    document.getElementById("left_arrow").onclick = function(){
+        location.href="/main_page";
+    };
+</script>
