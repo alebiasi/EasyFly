@@ -16,7 +16,7 @@ function makeid(length) {
     return text;
 }
 
-function saveDocument(user, type_index, image_name) {
+function SaveDocument(user, type_index, image_name) {
 
     const document = new Document({ 
         uid: user,
@@ -31,6 +31,48 @@ function saveDocument(user, type_index, image_name) {
         .catch((err) => {
             console.log(err);
         });
+}
+
+function ChangeUrl(user_id, document_type, newUrl) {
+    Document.replaceOne(
+        { uid: user_id, type: document_type },
+        { uid: user_id, type: document_type, image_url: newUrl },
+        function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                console.log("Document updated!");
+            }
+        });
+}
+
+function UpdateDocument(user_id, document_type, newUrl) {
+    Document.findOne({uid: user_id, type: document_type},
+         function (err, docs) {
+        // docs is an array of partially-`init`d documents
+        // defaults are still applied and will be "populated"
+            
+            if(docs != null) {
+
+                let string = docs.image_url;
+
+                let name = (string.substring(string.lastIndexOf('\\')));
+                let completeOldPath = "./static/" + name;
+
+                fs.unlink(completeOldPath, function (err, docs) {
+                    if (err) throw err;
+    
+                    console.log("Old images deleted!");
+                });
+
+                ChangeUrl(user_id, document_type, newUrl);
+            } else {
+                SaveDocument(user_id, document_type, newUrl);
+            }
+
+        });
+
 }
 
 router.post('/', async (req, res) => {
@@ -49,13 +91,10 @@ router.post('/', async (req, res) => {
         fs.rename(oldpath, newpath, function (err) {
             if (err) throw err;
 
-
-
-            saveDocument("user_123", parseInt(fields.document_type), dbPath);
+            UpdateDocument("user_123", parseInt(fields.document_type), dbPath);
 
             res.write("<h1>Documenti salvati con successo!</h1> \
             <a href='../../documents_page.html'>Ok</a>");
-            //res.status(200).json({"path": newpath});
         });
 
         
