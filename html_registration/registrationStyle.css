@@ -1,0 +1,94 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.upBorder {
+    background-color: #395577;
+    padding: 2em;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.leftArrow {
+    text-align: left;
+    vertical-align: middle;
+    width: 10%;
+    filter: invert(100%);
+}
+
+.leftArrow img {
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.serviceName {
+    color: #ffffff;
+    text-align: center;
+    width: 80%;
+    font-size: 200%;
+}
+
+.verticalDots {
+    vertical-align: middle;
+    text-align: right;
+    width: 10%;
+}
+
+.verticalDots img {
+    width: 25%;
+    height: auto;
+    margin: 0 auto;
+    filter: invert(100%);
+}
+
+main {
+    height: 70%;
+}
+
+.regText {
+    text-align: center;
+    font-size: 150%;
+}
+
+.regForm {
+    width: 70%;
+    margin-left: 15%;
+    height: 70%;
+}
+
+.registration {
+    height: 100%;
+}
+
+.inputText {
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
+    height: 15%;
+    border-radius: 20px;
+    font-size: 110%;
+    border-style: solid;
+}
+
+.newUser {
+    width: 60%;
+    height: 15%;
+    margin-left: 20%;
+    border-radius: 30px;
+    border-color: #ffffff;
+    background-color: #395577;
+    color: #ffffff;
+    border-style: solid;
+    font-size: 100%;
+}
