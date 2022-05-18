@@ -12,10 +12,9 @@ router.use(express.urlencoded());
  * add a request to db
  */
 router.post("",async function(req,res){ 
-    console.log("post request");
     var datetime = new Date();  //get current date
     let request = new Request({ //create new request object based on data from the user
-        user_id:req.body.user_id,
+        user_id:req.body.user_id,   //user_id:req.loggedUser.id,
         document_id:req.body.document_id,
         booking_code:req.body.booking_code,
         n_cases:req.body.n_cases,
@@ -24,15 +23,9 @@ router.post("",async function(req,res){
     })
 
     await request.save();   //save the new request
-    //res.status(201).send('Post request arrived at server!');    //TODO redirect to correct page
-    //res.location("/accept_page").status(200).send();
     res.redirect("/accept_page");
-    //res.redirect(200,"/accept");    //use res.location
 });
 
-/*router.use("/accept",function(req,res){
-    res.status(200).sendFile("/static/accept_page.html");
-});*/
 /**
  * get all requests
  */
@@ -47,7 +40,16 @@ router.get("",async function(req,res){
     res.status(200).json(rispostajson); //send object
 });
 
-
+router.get("/pending",async function(req,res){
+    var risposta='{"requests":[';
+    var requests = await Request.find({"status":0});    //get all requests from db
+    requests.forEach(element => {   //create json object
+        risposta+='{"_id":"'+element._id+'","user_id":"'+element.user_id+'","document_id":"'+element.document_id+'","booking_code":"'+element.booking_code+'","n_cases":"'+element.n_cases+'","request_time":"'+element.request_time+'","status":"'+element.status+'"},';
+    });
+    risposta+='{}]}';   
+    rispostajson=JSON.parse(risposta);  //parse json object
+    res.status(200).json(rispostajson); //send object
+});
 /**
  * get a specific request
  */

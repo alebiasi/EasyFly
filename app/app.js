@@ -43,7 +43,10 @@ app.use("/accept_page",function(req,res){
     var mypath = path.join(__dirname,"../html_checkin/accept_page.html");
     res.sendFile(mypath);
 });
-
+app.use("/auth_checkin",function(req,res){
+    var mypath = path.join(__dirname,"../html_checkin/checkin_auth.html");
+    res.sendFile(mypath);
+})
 app.use("/api/v1/requests",checkin);
 app.use("/api/v1/flights", flights);
 

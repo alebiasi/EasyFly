@@ -4,72 +4,18 @@
         <meta charset="utf-8"/>
         <title>EasyFly</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script src="/style/script.js"></script>
     </head>
-    <body onload="load_requests()">
+    <body onload="load_requests();">
         <table id="checkin_list">
             <tr>
-                <td>Request id</td>
                 <td>Requester id</td>
                 <td>Document id</td>
                 <td>Booking code</td>
                 <td>Number of suitcases</td>
                 <td>Request time</td>
+                <td>Buttons</td>
             </tr>
         </table>
     </body>
 </html>
-<script>
-    function load_requests(){
-        fetch("/api/v1/requests",{method:'GET'}).then((resp)=>resp.json()).then(function(data){
-            console.log("Inside load_request!");
-
-            var table = document.getElementById("checkin_list");
-            data.map(function(request){
-                var tr = document.createElement("tr");
-
-                var td_request_id = document.createElement("td");
-                td_request_id.textContent=request._id;
-
-                var td_requester_id=document.createElement("td");
-                td_requester_id.textContent=request.user_id;
-
-                var td_document_id=document.createElement("td");
-                td_document_id.textContent=request.document_id;
-
-                var td_booking_code=document.createElement("td");
-                td_booking_code.textContent=request.document_id;
-
-                var td_n_cases=document.createElement("td");
-                td_n_cases.textContent=request.document_id;
-                
-                var td_buttons=document.createElement("td");
-        
-                var accept_request =document.createElement("button");
-                accept_request.type="button";
-                accept_request.onclick=()=>update_request(request._id,1);
-                
-                var deny_request =document.createElement("button");
-                deny_request.type="button";
-                deny_request.onclick=()=>update_request(request._id,2);
-                
-                td_buttons.appendChild(accept_request);
-                td_buttons.appendChild(deny_request);
-
-                tr.appendChild(td_request_id);
-                tr.appendChild(td_requester_id);
-                tr.appendChild(td_document_id);
-                tr.appendChild(td_booking_code);
-                tr.appendChild(td_n_cases);
-                tr.appendChild(td_buttons);
-
-                
-                table.appendChild(tr);
-            });
-            
-        })
-        .catch(error => console.log(error));
-    };
-    function update_request(id,value){
-        console.log("to be implemented");
-    };
-</script>
