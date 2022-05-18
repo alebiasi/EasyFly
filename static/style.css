@@ -1,0 +1,175 @@
+* {
+    font-family: sans-serif;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    min-height: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.upBorder {
+    background-color: #395577;
+    padding: 2em;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    position: fixed;
+    top: 0;
+}
+
+.leftArrow {
+    text-align: left;
+    vertical-align: middle;
+    width: 10%;
+    filter: invert(100%);
+}
+
+.leftArrow img {
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.serviceName {
+    color: #ffffff;
+    text-align: center;
+    width: 80%;
+    font-size: 125%;
+}
+
+.verticalDots {
+    vertical-align: middle;
+    text-align: right;
+    width: 10%;
+    filter: invert(100%);
+}
+
+.verticalDots img {
+    width: 25%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.loginText {
+    text-align: center;
+    color: grey;
+    font-size: 200%;
+    margin: 5%;
+}
+
+.loginForm, .flightsContainer {
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 90%;
+}
+
+.flightsContainer {
+    margin-top: 35%;
+}
+
+.inputBox, .flightBox {
+    text-align: center;
+    padding: 1em;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 25px;
+    box-shadow: 2px 2px 5px #c5c5c5;
+}
+
+.flightBox {
+    padding: 1em 0em;
+}
+
+.flightBox * {
+    color: gray;
+}
+
+.userLogo, .passwordLogo, .searchLogo {
+    width: 9%;
+    height: auto;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.green {
+    color: green;
+} .red {
+    color: red;
+} .black {
+    color: black;
+}
+
+.flightIcon {
+    width: 8%;
+    height: auto;
+    margin: 2%;
+    vertical-align: middle;
+}
+
+.flightsContainer ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.flightBox table {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inputFormat {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #808080;
+    font-size: 120%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    width: 70%;
+    margin-left: 4%;
+}
+
+.blueText {
+    text-align: right;
+    font-size: 150%;
+    color: #395577;
+}
+
+.oLine {
+    width: 100%;
+    height: 12px;
+    border-bottom: 1px solid #000000;
+    text-align: center;
+}
+
+.oSymbol {
+    font-size: 120%;
+    background-color: #ffffff;
+    padding: 5%;
+}
+
+.googleLogo {
+    width: 8%;
+    height: auto;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.buttonLogin {
+    background-color: transparent;
+    border-color: transparent;
+    background-color: #395577;
+    color: #ffffff;
+    padding: 0.5em;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 20%;
+    border-radius: 30px 30px 30px;
+    font-size: 150%;
+}

@@ -7,6 +7,5 @@ app.locals.db = mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, use
     console.log("Connected to Database");
     app.listen(port, () => {
         console.log('Server listening on port ',port);
-    });
-    
+    });   
 });
