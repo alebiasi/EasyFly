@@ -2,7 +2,7 @@ const express = require('express');
 //definisco un router per gestire gli instradamenti
 const router = express.Router();
 //recupero il modello user per ottenere la mia collezione su mongodb
-const User = require('./model/user');
+const User = require('./models/user');
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 //route di login

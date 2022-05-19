@@ -1,12 +1,9 @@
 const express = require("express");
 const app = express();
-<<<<<<< HEAD
-const flights = require("./flights.js");
+
 const boarding_cards = require("./boarding_cards.js");
 const documents = require("./documents.js");
 const save_documents = require("./save_documents.js");
-
-=======
 const checkin = require("./checkin.js");
 const tokenchecker = require("./tokenchecker.js");
 const path = require('node:path');
@@ -15,7 +12,6 @@ const auth = require("./authentication.js");
 /**
  * configure parsing middleware
  */
->>>>>>> b2c764364264f1db7f4e52149ae0bbb9d1d2b403
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
