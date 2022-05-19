@@ -4,6 +4,7 @@ const checkin = require("./checkin.js");
 const tokenchecker = require("./tokenchecker.js");
 const path = require('node:path');
 const flights = require("./flights.js"); //checkin.js
+const auth = require("./authentication.js");
 /**
  * configure parsing middleware
  */
@@ -25,7 +26,7 @@ app.use((req,res,next) => {
 /**
  * authentication middleware
  */
-//add authentication.js here
+app.use('/api/v1/authentication',auth);
 //app.use("/api/v1/requests",tokenchecker);
 
 /**
