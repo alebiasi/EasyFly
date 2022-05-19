@@ -80,6 +80,7 @@ router.put("/:id",async function(req,res){
     try{
         var mongoid = new mongoose.mongo.ObjectId(id);    //get id from req
         var status=req.body.status; //get status from body
+        console.log(util.inspect(req.body,{showHidden: false, depth: null}));
         var request = await Request.updateOne({"_id":mongoid},{$set:{"status":status}}); //update entry
         if(request.acknowledged==false){    //return message
             res.status(404).send("Error");  //TODO verify correct status code
