@@ -1,5 +1,5 @@
 function load_requests(){
-    fetch("/api/v1/requests/pending",{method:'GET'}).then((resp)=>resp.json()).then(function(data){ //get all requests from api
+    fetch("/api/v1/requests/pending?token="+window.localStorage.getItem("token"),{method:'GET'}).then((resp)=>resp.json()).then(function(data){ //get all requests from api
         var body= document.getElementById("table");
         if(data["requests"].length>1){  //create table only if there are requests to accept, otherwise give "No requests found!" message
             var table = document.createElement("table");
@@ -107,10 +107,26 @@ function load_requests(){
     .catch(error => console.log(error));
 };
 function update_request(id,value){  //update the status of a specific request when the user click the accept or decline button
-    const data = {status:value};
+    const data = {status:value,token:window.localStorage.getItem("token")};
     fetch("/api/v1/requests/"+id,{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)}).then(location.reload());
 };
 
 function left_arrow_click(){
     location.href="/main_page"; //send back to main page
+}
+function insert_token(){
+    const urlParams = new URLSearchParams(window.location.search);
+    var token =urlParams.get("token");
+    if(token!=null)
+        window.localStorage.setItem("token",token);
+    var forms=document.getElementsByClassName("form");
+
+    for(var i=0;i<forms.length;i=i+1){
+        var hidden = document.createElement("input");
+        hidden.type="hidden";
+        hidden.name="token";
+        hidden.value=window.localStorage.getItem("token");
+        forms[i].appendChild(hidden);
+    }
+
 }

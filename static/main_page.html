@@ -5,8 +5,9 @@
         <title>EasyFly</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
+        <script src="/style/script.js"></script>
     </head>
-    <body>
+    <body onload="insert_token()">
         <div class="upBorder">
             <table class="upTable">
                 <tr>
@@ -26,28 +27,28 @@
             <table class="main">
                 <tr class="main">
                     <td class="main">
-                        <!--<form method="POST" action="/checkin" class="main">-->
-                            <button  name="submit_checkin" class="button_main" value="Effettua check-in" onclick="main_send('/checkin')"> <!--input type="submit"-->
-                        <!--</form>-->
+                        <form method="POST" action="/checkin" class="form">
+                            <input type="submit"  name="submit_checkin" class="button_main" value="Effettua check-in"> 
+                        </form>
                     </td>
                 </tr>
                 <tr class="main">
                     <td class="main">
-                        <!--<form method="POST" action="/auth_checkin" class="main">-->
-                            <button name="submit_auth_checkin" class="button_main" value="Authenticate checkin" onclick="main_send('/auth_checkin')">
-                        <!--</form>-->
+                        <form method="POST" action="/auth_checkin" class="form">
+                            <input type="submit" name="submit_auth_checkin" class="button_main" value="Authenticate checkin">
+                        </form>
                     </td>
                 </tr>
                 <tr class="main">
                     <td class="main">
-                        <form method="POST" action="/main_page" class="main">
+                        <form method="POST" action="/main_page" class="form">
                             <input type="submit" name="submit3" class="button_main" value="Button3"/>
                         </form>
                     </td>
                 </tr>
                 <tr class="main">
                     <td class="main">
-                        <form method="POST" action="/main_page" class="main">
+                        <form method="POST" action="/main_page" class="form">
                             <input type="submit" name="submit4" class="button_main" value="Button4"/>
                         </form>
                     </td>
@@ -56,12 +57,3 @@
         </main>
     </body>
 </html>
-<script>
-    function main_send(page){
-        const urlParams = new URLSearchParams(window.location.search);
-        const token =urlParams.get("token");
-        const data=JSON.stringify({token:token});
-        console.log(data);
-        fetch(page,{method:"post",headers: {'Content-Type': 'application/json',}, body:data});
-    }
-</script>

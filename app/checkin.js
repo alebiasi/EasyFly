@@ -12,10 +12,13 @@ router.use(express.urlencoded());
  * add a request to db
  */
 router.post("",async function(req,res){ 
-    console.log("aaaaaaaaaaaaaaaaaaa ",req.loggedUser.id);
     var datetime = new Date();  //get current date
+    var token=req.body.token || window.localStorage.getItem("token");
+    var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace('-', '+').replace('_', '/');
+	var parsedtoken=JSON.parse(atob(base64));
     let request = new Request({ //create new request object based on data from the user
-        user_id:req.body.user_id,   //user_id:req.loggedUser.id,
+        user_id:parsedtoken["id"],   //user_id:req.loggedUser.id,
         document_id:req.body.document_id,
         booking_code:req.body.booking_code,
         n_cases:req.body.n_cases,
@@ -24,7 +27,7 @@ router.post("",async function(req,res){
     })
 
     await request.save();   //save the new request
-    res.redirect("/accept_page");
+    res.status(201).redirect("/accept_page");
 });
 
 /**

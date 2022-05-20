@@ -34,7 +34,7 @@ app.use((req,res,next) => {
  */
 app.use('/api/v1/authentication',auth);
 app.use("/api/v1/requests",tokenchecker);
-
+app.use("/checkin",tokenchecker);
 
 /**
  * routing
@@ -43,7 +43,7 @@ app.use("/main_page",function(req,res){
     var mypath = path.join(__dirname,"../static/main_page.html");
     res.sendFile(mypath);
 });
-//app.use("/checkin",tokenchecker);
+
 app.use("/checkin",function(req,res){
     var mypath = path.join(__dirname,"../html_checkin/checkin.html");
     res.sendFile(mypath);
