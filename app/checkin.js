@@ -1,5 +1,5 @@
 const express = require("express");
-const Request = require("./request");
+const Request = require("./models/request");
 const util = require("util");
 const router = express.Router();
 const mongoose = require("mongoose");
@@ -80,7 +80,6 @@ router.put("/:id",async function(req,res){
     try{
         var mongoid = new mongoose.mongo.ObjectId(id);    //get id from req
         var status=req.body.status; //get status from body
-        console.log(util.inspect(req.body,{showHidden: false, depth: null}));
         var request = await Request.updateOne({"_id":mongoid},{$set:{"status":status}}); //update entry
         if(request.acknowledged==false){    //return message
             res.status(404).send("Error");  //TODO verify correct status code
@@ -102,7 +101,6 @@ router.delete("/:id",async function(req,res){
     try{
         var mongoid = new mongoose.mongo.ObjectId(id);    //get id from req
         var request = await Request.deleteOne({"_id":mongoid});  //delete entry
-        console.log(request);
         if(request.acknowledged==false){    //return message
             res.status(404).send("Error while deleting an entry");
         }else{
