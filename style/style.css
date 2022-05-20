@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    width: 40%;
+    width: 100%;
     min-height: 100%;
     margin: auto;
     padding: 0;
@@ -154,4 +154,21 @@ body {
 }
 .main{
     margin:0 auto;
+}
+.table_auth{
+    margin-top: 10%;
+    width:100%;
+    background-color: transparent;
+    border:2px solid #395577;
+    border-collapse: collapse;
+}
+.tr_auth{
+    background-color: transparent;
+    border:2px solid #395577;
+    border-collapse: collapse;
+}
+.td_auth{
+    background-color: transparent;
+    border:2px solid #395577;
+    border-collapse: collapse;
 }

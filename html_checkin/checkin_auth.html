@@ -4,18 +4,28 @@
         <meta charset="utf-8"/>
         <title>EasyFly</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
         <script src="/style/script.js"></script>
     </head>
     <body onload="load_requests();" id="body">
-        <!--<table id="checkin_list">
-            <tr>
-                <td>Requester id</td>
-                <td>Document id</td>
-                <td>Booking code</td>
-                <td>Number of suitcases</td>
-                <td>Request time</td>
-                <td>Buttons</td>
-            </tr>
-        </table>-->
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="/style/Left arrow.png" id="left_arrow" onclick="left_arrow_click()"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Check-in</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="/style/Vertical dots.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="table"></div>
+        <form method="POST" action="/main_page">
+            <input type="submit" name="sumbit" value="Home page" class="button_main"/>
+        </form>
     </body>
 </html>
