@@ -7,14 +7,10 @@ const save_documents = require("./save_documents.js");
 const checkin = require("./checkin.js");
 const tokenchecker = require("./tokenchecker.js");
 const path = require('node:path');
-const flights = require("./flights.js"); //checkin.js
+const flights = require("./flights.js");
 const auth = require("./authentication.js");
-<<<<<<< HEAD
 var util = require("util");
-=======
 const disconnect = require('./disconnect.js');
-
->>>>>>> 26b2346392ac33db68993d49a40fbb6fc4e86304
 /**
  * configure parsing middleware
  */
