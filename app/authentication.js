@@ -33,6 +33,11 @@ router.post('/login', async function(req,res){
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
     
+	// Create a cookies object to know the user is logged
+	res.cookie('loginCookie', token, {
+		duration: 1000*60*180	// expires in 3 hours
+	});
+
     res.json({
 		success: true,
 		message: 'Token creato!',
