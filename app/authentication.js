@@ -32,7 +32,17 @@ router.post('/login', async function(req,res){
 		expiresIn: 86400 // expires in 24 hours
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+<<<<<<< HEAD
     /*res.json({
+=======
+    
+	// Create a cookies object to know the user is logged
+	res.cookie('loginCookie', token, {
+		duration: 1000*60*180	// expires in 3 hours
+	});
+
+    res.json({
+>>>>>>> 26b2346392ac33db68993d49a40fbb6fc4e86304
 		success: true,
 		message: 'Token creato!',
 		token: token,

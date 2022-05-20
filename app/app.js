@@ -9,7 +9,12 @@ const tokenchecker = require("./tokenchecker.js");
 const path = require('node:path');
 const flights = require("./flights.js"); //checkin.js
 const auth = require("./authentication.js");
+<<<<<<< HEAD
 var util = require("util");
+=======
+const disconnect = require('./disconnect.js');
+
+>>>>>>> 26b2346392ac33db68993d49a40fbb6fc4e86304
 /**
  * configure parsing middleware
  */
@@ -61,6 +66,7 @@ app.use("/api/v1/flights", flights);
 app.use("/api/v1/boarding_cards", boarding_cards);
 app.use("/api/v1/documents", documents);
 app.use("/api/v1/save_documents", save_documents);
+app.use("/api/v1/disconnect", disconnect);
 
 app.use((req, res) => {
     res.status(404);
