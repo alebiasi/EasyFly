@@ -12,6 +12,7 @@ router.use(express.urlencoded());
  * add a request to db
  */
 router.post("",async function(req,res){ 
+    console.log("aaaaaaaaaaaaaaaaaaa ",req.loggedUser.id);
     var datetime = new Date();  //get current date
     let request = new Request({ //create new request object based on data from the user
         user_id:req.body.user_id,   //user_id:req.loggedUser.id,

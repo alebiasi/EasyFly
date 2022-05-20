@@ -32,15 +32,17 @@ router.post('/login', async function(req,res){
 		expiresIn: 86400 // expires in 24 hours
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
-    
-    res.json({
+	//console.log(token);
+    //res.body.mytoken=token;
+    /*res.json({
 		success: true,
 		message: 'Token creato!',
 		token: token,
 		email: user.email,
 		id: user._id,
 		self: "api/v1/" + user._id
-	});
+	});*/
+	res.status(302).redirect("/main_page?token="+token);
 });
 
 //route di registrazione

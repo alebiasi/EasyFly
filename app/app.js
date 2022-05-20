@@ -9,6 +9,7 @@ const tokenchecker = require("./tokenchecker.js");
 const path = require('node:path');
 const flights = require("./flights.js"); //checkin.js
 const auth = require("./authentication.js");
+var util = require("util");
 /**
  * configure parsing middleware
  */
@@ -24,6 +25,7 @@ app.use("/style",express.static("style"));
 
 app.use((req,res,next) => {
     console.log(req.method + ' ' + req.url)
+    //console.log(util.inspect(req.body,{showHidden: false, depth: null}))
     next()
 })
 
@@ -31,7 +33,8 @@ app.use((req,res,next) => {
  * authentication middleware
  */
 app.use('/api/v1/authentication',auth);
-//app.use("/api/v1/requests",tokenchecker);
+app.use("/api/v1/requests",tokenchecker);
+
 
 /**
  * routing
@@ -40,6 +43,7 @@ app.use("/main_page",function(req,res){
     var mypath = path.join(__dirname,"../static/main_page.html");
     res.sendFile(mypath);
 });
+//app.use("/checkin",tokenchecker);
 app.use("/checkin",function(req,res){
     var mypath = path.join(__dirname,"../html_checkin/checkin.html");
     res.sendFile(mypath);
