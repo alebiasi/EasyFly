@@ -114,3 +114,7 @@ function update_request(id,value){  //update the status of a specific request wh
 function left_arrow_click(){
     location.href="/main_page"; //send back to main page
 }
+
+function clearToken(){
+    localStorage.clear();
+}
