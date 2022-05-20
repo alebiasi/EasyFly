@@ -7,7 +7,7 @@
         <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
         <script src="/style/script.js"></script>
     </head>
-    <body>
+    <body onload="load_requests();" id="body">
         <div class="upBorder">
             <table class="upTable">
                 <tr>
@@ -23,13 +23,9 @@
                 </tr>
             </table>
         </div>
-        <main>        
-            <div class="loginForm">
-                <h2 class="info">La tua richiesta di check-in è stata inviata con successo!</h2>
-                <form method="POST" action="/main_page">
-                    <input type="submit" name="submit" class="button" value="Torna alla pagina principale">
-                </form>
-            </div>
-        </main>
+        <div id="table"></div>
+        <form method="POST" action="/main_page">
+            <input type="submit" name="sumbit" value="Home page" class="button_main"/>
+        </form>
     </body>
 </html>
