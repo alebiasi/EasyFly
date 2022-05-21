@@ -64,10 +64,11 @@ app.use("/error",function(req,res){
     res.sendFile(mypath);
 });
 
-/*app.use("/login",function(req,res){
+app.use("/login",function(req,res){
     var mypath = path.join(__dirname,"../static/login.html");
     res.sendFile(mypath);
-});*/
+});
+
 app.use("/api/v1/requests",checkin);
 app.use("/api/v1/flights", flights);
 app.use("/api/v1/boarding_cards", boarding_cards);
