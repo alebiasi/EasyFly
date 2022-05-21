@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>EasyFly</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
+        <script src="/script/script.js"></script>
+    </head>
+    <body>
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="/style/Left arrow.png" id="left_arrow" onclick="left_arrow_click()"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Check-in</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="/style/Vertical dots.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <main>
+            <div class="error_message">
+                <h3>Sembra che ci sia un problema con le tue credenziali</h3>
+                <form method="GET" action="/login.html">
+                    <input type="submit" name="login" value="Vai alla pagina di login / registrazione" class="button_main">
+                </form>
+                <form method="POST" action ="/main_page">
+                    <input type="submit" name="main_page" value="Vai alla pagina principale" class="button_main">
+                </form>
+            </div>
+        </main>
+</html>
