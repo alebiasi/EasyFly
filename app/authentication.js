@@ -25,7 +25,8 @@ router.post('/login', async function(req,res){
     // if user is found and password is right create a token
 	var payload = {
 		email: user.email,
-		id: user._id
+		id: user._id,
+		admin: user.admin
 		// other data encrypted in the token	
 	}
 	var options = {
@@ -80,8 +81,41 @@ router.post('/registration', async function(req,res){
     //memorizzo il nuovo utente
     newUser = await newUser.save();
     let userId = newUser.id;
-    res.location("/api/v1/authentication/front" + userId).status(201).send();
+    res.status(201).redirect("/login"); //reindirizzo ad una pagina di login
 
+
+});
+
+//route di registrazione utente amministratore
+router.post('/registration/admin', async function(req,res){
+    //creo un nuovo utente admin
+	let newUser = new User({
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        password: req.body.password,
+        createdAt: Date.now(),
+		admin: true
+    });
+
+    //verifico che non esita già un utente con una certa mail
+    let user = await User.findOne({
+		email: req.body.email
+	}).exec();
+    if (user) {
+		res.status(400).json({ error: 'Esiste già un utente con questo indirizzo email' });
+        return;
+	}
+    //controllo la correttezza dei campi
+    if (!newUser.email || !newUser.name || !newUser.surname || typeof newUser.email != 'string' || !checkIfEmailInString(newUser.email)) {
+        res.status(400).json({ error: 'Non tutti i campi sono stati compilati correttamente' });
+        return;
+    }
+
+    //memorizzo il nuovo utente
+    newUser = await newUser.save();
+    let userId = newUser.id;
+    res.location("/api/v1/authentication/front" + userId).status(201).send();
 
 });
 
