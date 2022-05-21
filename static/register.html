@@ -1,19 +1,50 @@
-<h1> Sign up form </h1>
+<!DOCTYPE html>
+    <head>
+        <meta charset='utf-8'>
+        <title>EasyFly</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='../style/registrationStyle.css'>
+		<script src="/style/script.js"></script>
+    </head>
+    <body>
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="/style/Left arrow.png" id="left_arrow" onclick="left_arrow_click()"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Registrazione</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="/style/Vertical dots.png" class="verticalDots"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-<form action="/api/v1/authentication/registration" method="POST">
-	<input type="text" name="name"
-		placeholder="name">
-	<input type="text" name="surname"
-		placeholder="surname">
-	<input type="text" name="email"
-		placeholder="email">
-	<input type="password" name="password"
-		placeholder="password">
-	<button>Submit</button>
-</form>
+        <br><br>
 
-<h1>This is home page</h1>
+        <main>
+            <div class="regText">
+                <b>Registrazione</b>
+            </div>
 
-<li><a href="/register.html">Sign up!!</a></li>
-<li><a href="/login.html">Login</a></li>
-<li><a href="/logout.html">Logout</a></li>
+            <br><br>
+
+            <div class="regForm">
+                <form action="/api/v1/authentication/registration" method="POST" class="registration">
+                    <input type="text" placeholder="Nome" class="inputText" name="name" id="name">
+                    <br><br><br>
+                    <input type="text" placeholder="Cognome" class="inputText" name="surname" id="surname">
+                    <br><br><br>
+                    <input type="text" placeholder="Email" class="inputText" name="email" id="email">
+                    <br><br><br>
+                    <input type="password" placeholder="Password" class="inputText" name="password" id="password">
+                    <br><br><br><br>
+					<input type="submit" name="registerUser" class="newUser" id="registerUser" value="Registrati">
+                </form>
+            </div>
+        </main>
+    </body>
+</html>
