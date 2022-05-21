@@ -77,10 +77,6 @@ function saveDocument() {
 
 function saveDocument(src) {
 
-    const returnname = document.getElementById("return_name");
-
-    //127.0.0.1:8080/api/v1/save_documents/.%2Fimgs%2Fimg11.jpg
-    
     fetch('../api/v1/save_documents/'+src)
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) {

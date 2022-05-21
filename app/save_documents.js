@@ -78,8 +78,6 @@ function UpdateDocument(user_id, document_type, newUrl) {
 router.post('/', async (req, res) => {
         var form = new formidable.IncomingForm();
 
-        console.log
-
         form.parse(req, function (err, fields, files) {
         var oldpath = files.filetoupload.filepath;
 
@@ -91,13 +89,11 @@ router.post('/', async (req, res) => {
         fs.rename(oldpath, newpath, function (err) {
             if (err) throw err;
 
-            UpdateDocument("user_123", parseInt(fields.document_type), dbPath);
+            UpdateDocument(fields.uid, parseInt(fields.document_type), dbPath);
 
-            res.write("<h1>Documenti salvati con successo!</h1> \
+            res.status(200).write("<h1>Documenti salvati con successo!</h1> \
             <a href='../../documents_page.html'>Ok</a>");
         });
-
-        
     });
 });
 

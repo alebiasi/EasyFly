@@ -105,7 +105,7 @@
             <table class="upTable">
                 <tr>
                     <td class="leftArrow">
-                        <img src="imgs/Left arrow.png"/>
+                        <img src="imgs/Left arrow.png" onclick="window.location.replace('main_page')"/>
                     </td>
                     <td class="serviceName">
                         <b>I tuoi documenti</b>
@@ -129,6 +129,7 @@
             <img id="id_img" src="imgs/none.png" alt="ID Card" style="width:100%;max-width:300px"> <br>
 
             <form action="/api/v1/save_documents" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="uid" id="uid_0" value="user_123">
                 <input type="hidden" name="document_type" value="0">
                 <input type="file" name="filetoupload"><br>
                 <input type="submit" value="Carica">
@@ -141,6 +142,7 @@
             <img id="passport_img" src="imgs/none.png" alt="Passport" style="width:100%;max-width:300px"> <br>
 
             <form action="/api/v1/save_documents" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="uid" id="uid_1"  value="user_123">
                 <input type="hidden" name="document_type" value="1">
                 <input type="file" name="filetoupload"><br>
                 <input type="submit" value="Carica">
@@ -200,6 +202,14 @@
     
     // Get the modal
     var modal = document.getElementById("myModal");
+
+    //
+    var uid_0 = document.getElementById("uid_0");
+    var uid_1 = document.getElementById("uid_1");
+
+    //TODO: Get uid from session / cookie 
+    uid_0.value = "user_123";
+    uid_1.value = "user_123";
     
     // Get the image and insert it inside the modal - use its "alt" text as a caption
     var img = document.getElementById("id_img");
