@@ -59,7 +59,8 @@ router.post('/registration', async function(req,res){
         surname: req.body.surname,
         email: req.body.email,
         password: req.body.password,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+		admin: false
     });
 
     //verifico che non esita già un utente con una certa mail

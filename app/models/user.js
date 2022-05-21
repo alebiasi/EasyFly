@@ -21,6 +21,11 @@ const UserSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now()
+  },
+  //aggiunta gestione admin
+  admin: {
+    type: Boolean,
+    default: false
   }
 });
 
