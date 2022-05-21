@@ -304,3 +304,14 @@ function create_standard_page(){
     tr4.appendChild(td_documenti);
     table.appendChild(tr4);
 }
+
+//controllo errori pagina login
+function checkerrors(){
+    var error = urlParams.get("error");
+    if(error=="user"){
+        document.getElementById("error1").hidden=false;
+    }
+    if(error=="psw"){
+        document.getElementById("error2").hidden=false;
+    }
+}

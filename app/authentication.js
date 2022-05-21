@@ -14,12 +14,12 @@ router.post('/login', async function(req,res){
 
     // user not found
 	if (!user) {
-		res.json({ success: false, message: 'Authentication failed. User not found.' });
+		res.json({ success: false, message: 'Authentication failed. User not found.' }).redirect("/login?error=user");
 	}
 
 	// check if password matches
 	if (user.password != req.body.password) {
-		res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+		res.json({ success: false, message: 'Authentication failed. Wrong password.' }).redirect("/login?error=psw");
 	}
 
     // if user is found and password is right create a token
