@@ -32,15 +32,23 @@ router.post('/login', async function(req,res){
 		expiresIn: 86400 // expires in 24 hours
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
+
     
+	// Create a cookies object to know the user is logged
+	/*res.cookie('loginCookie', token, {
+		duration: 1000*60*180	// expires in 3 hours
+	});
+
     res.json({
+
 		success: true,
 		message: 'Token creato!',
 		token: token,
 		email: user.email,
 		id: user._id,
 		self: "api/v1/" + user._id
-	});
+	});*/
+	res.status(302).redirect("/main_page?token="+token);
 });
 
 //route di registrazione
