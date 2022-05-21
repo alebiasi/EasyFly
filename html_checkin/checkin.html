@@ -5,13 +5,14 @@
         <title>EasyFly</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
+        <script src="/style/script.js"></script>
     </head>
-    <body>
+    <body onload="insert_token()">
         <div class="upBorder">
             <table class="upTable">
                 <tr>
                     <td class="leftArrow">
-                        <img src="/style/Left arrow.png" id="left_arrow"/>
+                        <img src="/style/Left arrow.png" id="left_arrow" onclick="left_arrow_click()"/>
                     </td>
                     <td class="serviceName">
                         <b>Check-in</b>
@@ -24,9 +25,9 @@
         </div>
         <main>
             <div class="loginForm">
-                <form action="/api/v1/requests" method="post">
+                <form action="/api/v1/requests" method="post" class="form">
                     
-                    <input type="hidden" name="user_id" value="TEST"/>  <!--TODO-->
+                    <!--<input type="hidden" name="user_id" value="TEST"/> -->
                     
                     <div class="inputBox">
                         <input type="text" name="document_id" class="inputFormat" placeholder="Document id:" required/><br>
@@ -44,8 +45,3 @@
         
     </body>
 </html>
-<script>
-    document.getElementById("left_arrow").onclick = function(){
-        location.href="/main_page"; //send back to main page
-    };
-</script>

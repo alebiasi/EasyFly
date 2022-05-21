@@ -1,0 +1,61 @@
+<!-- TODO: Cambiare il nome in tabellone_orari.html-->
+<html>  
+    <head>
+        <meta charset='utf-8'>
+        <title>EasyFly</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='style.css'> 
+    </head>
+    <body> 
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="imgs/Left arrow.png" onclick="window.location.replace('main_page')"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Cerca il tuo volo</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="imgs/Vertical dots.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+<!--
+        <div class="loginForm">
+            <form action="userLogin" method="post">
+                <div class="inputBox">
+                    <img src="imgs/search.png" class="searchLogo"/>
+                    <input id="search_flight" type="text" class="inputFormat" name="search_flight" placeholder="Cerca il tuo volo...">
+                </div>
+                <br>
+            </form>
+        </div>
+-->
+        
+        <div class="flightsContainer">
+            <ul id="flights">
+                <li class="flightBox">
+                    <table>
+                        <tr>
+                            <td><img src="imgs/clock.png" class="flightIcon"/> 09:25</td>
+                            <td><img src="imgs/aeroplane.png" class="flightIcon"/>Compagnia</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><img src="imgs/comment.png" class="flightIcon"/>In orario</td>
+                        </tr>
+                        <tr>
+                            <td><img src="imgs/list.png" class="flightIcon"/>Codice volo</td>
+                            <td><img src="imgs/walker.png" class="flightIcon"/>Gate: n</td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
+
+<script src="flight_page_script.js"></script>
