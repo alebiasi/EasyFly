@@ -23,6 +23,7 @@ app.use(express.urlencoded({extended: true}));
 app.use("/", express.static(process.env.FRONTEND || 'static'));
 app.use('/', express.static('static')); // expose also this folder
 app.use("/style",express.static("style"));
+app.use("/script",express.static("script"));
 
 app.use((req,res,next) => {
     console.log(req.method + ' ' + req.url)
@@ -56,7 +57,17 @@ app.use("/accept_page",function(req,res){
 app.use("/auth_checkin",function(req,res){
     var mypath = path.join(__dirname,"../html_checkin/checkin_auth.html");
     res.sendFile(mypath);
-})
+});
+
+app.use("/error",function(req,res){
+    var mypath = path.join(__dirname,"../static/error_page.html");
+    res.sendFile(mypath);
+});
+
+/*app.use("/login",function(req,res){
+    var mypath = path.join(__dirname,"../static/login.html");
+    res.sendFile(mypath);
+});*/
 app.use("/api/v1/requests",checkin);
 app.use("/api/v1/flights", flights);
 app.use("/api/v1/boarding_cards", boarding_cards);

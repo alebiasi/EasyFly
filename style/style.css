@@ -172,3 +172,7 @@ body {
     border:2px solid #395577;
     border-collapse: collapse;
 }
+
+.error_message{
+    text-align: center;
+}

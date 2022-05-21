@@ -23,13 +23,15 @@
                 </tr>
             </table>
         </div>
-        <main>        
-            <div class="loginForm">
-                <h2 class="info">La tua richiesta di check-in è stata inviata con successo!</h2>
-                <form method="POST" action="/main_page">
-                    <input type="submit" name="submit" class="button" value="Torna alla pagina principale">
+        <main>
+            <div class="error_message">
+                <h3>Sembra che ci sia un problema con le tue credenziali</h3>
+                <form method="GET" action="/login.html">
+                    <input type="submit" name="login" value="Vai alla pagina di login / registrazione" class="button_main">
+                </form>
+                <form method="POST" action ="/main_page">
+                    <input type="submit" name="main_page" value="Vai alla pagina principale" class="button_main">
                 </form>
             </div>
         </main>
-    </body>
 </html>

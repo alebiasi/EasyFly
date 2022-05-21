@@ -157,3 +157,150 @@ function clearToken(){
     localStorage.clear();
 
 }
+
+function verify_user_type(){
+    const urlParams = new URLSearchParams(window.location.search);
+    var token = urlParams.get("token");
+    var table = document.getElementById("table_main");
+    if(token==null){    //standard non logged user
+        //show standard main page
+        create_standard_page();
+
+    }else{
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        var parsedtoken=JSON.parse(atob(base64));
+        var admin=parsedtoken["admin"];
+        if(admin==true){ //admin user
+            //show authorize checkin button
+        
+            var  tr1 = document.createElement("tr");    //creazione bottone autorizzazione check-in
+            var td_auth_checkin = document.createElement("td");
+
+            var form_auth_checkin =document.createElement("form");
+            form_auth_checkin.method="POST";
+            form_auth_checkin.action="/checkin";
+            form_auth_checkin.className="form";
+
+            var button_auth_checkin = document.createElement("input");
+            button_auth_checkin.type="submit";
+            button_auth_checkin.name="submit_checkin";
+            button_auth_checkin.className="button_main";
+            button_auth_checkin.value="Effettua check-in";
+
+            form_auth_checkin.appendChild(button_auth_checkin);
+            td_auth_checkin.appendChild(form_auth_checkin);
+            tr1.appendChild(td_auth_checkin);
+            table.appendChild(tr1);
+
+            var  tr2 = document.createElement("tr");    //creazione bottone login /logout
+            var td_login_logout = document.createElement("td");
+
+            var form_login_logout =document.createElement("form");
+            form_login_logout.method="GET";
+            form_login_logout.action="/api/v1/disconnect/logout";
+            form_login_logout.className="form";
+            form_login_logout.id="formLoginLogout";
+
+            var button_login_logout = document.createElement("input");
+            button_login_logout.type="submit";
+            button_login_logout.name="submit_login";
+            button_login_logout.className="button_main";
+            button_login_logout.value="Logout";
+            button_login_logout.id="btnLoginLogout"
+
+            form_login_logout.appendChild(button_login_logout);
+            td_login_logout.appendChild(form_login_logout);
+            tr2.appendChild(td_login_logout);
+            table.appendChild(tr2);
+        }else{  //standard logged user
+            //show standard main page
+            create_standard_page();
+        }
+    }
+}
+
+function create_standard_page(){
+    var table = document.getElementById("table_main");
+    var  tr1 = document.createElement("tr");    //creazione bottone check-in online
+    var td_checkin = document.createElement("td");
+
+    var form_checkin =document.createElement("form");
+    form_checkin.method="POST";
+    form_checkin.action="/checkin";
+    form_checkin.className="form";
+
+    var button_checkin = document.createElement("input");
+    button_checkin.type="submit";
+    button_checkin.name="submit_checkin";
+    button_checkin.className="button_main";
+    button_checkin.value="Effettua check-in";
+
+    form_checkin.appendChild(button_checkin);
+    td_checkin.appendChild(form_checkin);
+    tr1.appendChild(td_checkin);
+    table.appendChild(tr1);
+
+
+
+    var  tr2 = document.createElement("tr");    //creazione bottone login /logout
+    var td_login_logout = document.createElement("td");
+
+    var form_login_logout =document.createElement("form");
+    form_login_logout.method="GET";
+    form_login_logout.action="/api/v1/disconnect/logout";
+    form_login_logout.className="form";
+    form_login_logout.id="formLoginLogout";
+
+    var button_login_logout = document.createElement("input");
+    button_login_logout.type="submit";
+    button_login_logout.name="submit_login";
+    button_login_logout.className="button_main";
+    button_login_logout.value="Logout";
+    button_login_logout.id="btnLoginLogout"
+
+    form_login_logout.appendChild(button_login_logout);
+    td_login_logout.appendChild(form_login_logout);
+    tr2.appendChild(td_login_logout);
+    table.appendChild(tr2);
+
+
+    var  tr3 = document.createElement("tr");    //creazione bottone tabellone
+    var td_tabellone = document.createElement("td");
+
+    var form_tabellone =document.createElement("form");
+    form_tabellone.method="GET";
+    form_tabellone.action="/tabellone_orari.html";
+    form_tabellone.className="form";
+
+    var button_tabellone = document.createElement("input");
+    button_tabellone.type="submit";
+    button_tabellone.name="submit_tabellone";
+    button_tabellone.className="button_main";
+    button_tabellone.value="Visualizza voli";
+
+    form_tabellone.appendChild(button_tabellone);
+    td_tabellone.appendChild(form_tabellone);
+    tr3.appendChild(td_tabellone);
+    table.appendChild(tr3);
+
+
+    var  tr4 = document.createElement("tr");    //creazione tabellone documenti
+    var td_documenti = document.createElement("td");
+
+    var form_documenti =document.createElement("form");
+    form_documenti.method="GET";
+    form_documenti.action="/documents_page.html";
+    form_documenti.className="form";
+
+    var button_documenti = document.createElement("input");
+    button_documenti.type="submit";
+    button_documenti.name="submit_documenti";
+    button_documenti.className="button_main";
+    button_documenti.value="I miei documenti";
+
+    form_documenti.appendChild(button_documenti);
+    td_documenti.appendChild(form_documenti);
+    tr4.appendChild(td_documenti);
+    table.appendChild(tr4);
+}

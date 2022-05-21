@@ -5,9 +5,9 @@
         <title>EasyFly</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
-        <script src="/style/script.js"></script>
+        <script src="/script/script.js"></script>
     </head>
-    <body onload="insert_token(); refreshLoginLogout();">
+    <body onload="verify_user_type(); insert_token(); refreshLoginLogout();">
         <div class="upBorder">
             <table class="upTable">
                 <tr>
@@ -24,8 +24,8 @@
             </table>
         </div>
         <main> 
-            <table class="main">
-                <tr class="main">
+            <table class="main" id="table_main">
+                <!--<tr class="main">
                     <td class="main">
                         <form method="POST" action="/checkin" class="form">
                             <input type="submit"  name="submit_checkin" class="button_main" value="Effettua check-in"> 
@@ -36,7 +36,7 @@
                     <td class="main">
 
                         <form method="POST" action="/auth_checkin" class="form">
-                            <input type="submit" name="submit_auth_checkin" class="button_main" value="Authenticate checkin">
+                            <input type="submit" name="submit_auth_checkin" class="button_main" value="Authorize checkin">
 
                         </form>
                     </td>
@@ -61,7 +61,7 @@
                             <input type="submit" name="submit4" class="button_main" value="I miei documenti"/>
                         </form>
                     </td>
-                </tr>
+                </tr>-->
             </table>
         </main>
     </body>

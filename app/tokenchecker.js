@@ -12,20 +12,22 @@ const tokenChecker = function(req, res, next) {
 	// if there is no token
 	if (!token) {
 		console.log("No token");
-		return res.status(401).send({ 
+		/*return res.status(401).send({ 
 			success: false,
 			message: 'No token provided.'
-		});
+		});*/
+		return res.status(302).redirect("/error");
 	}
 
 	// decode token, verifies secret and checks exp
 	jwt.verify(token, process.env.SUPER_SECRET, function(err, decoded) {			
 		if (err) {
 			console.log("Wrong token");
-			return res.status(403).send({
+			/*return res.status(403).send({
 				success: false,
 				message: 'Failed to authenticate token.'
-			});		
+			});*/
+			return res.redirect("/error").status(302);		
 		} else {
 			console.log("verify ok");
 			// if everything is good, save to request for use in other routes
