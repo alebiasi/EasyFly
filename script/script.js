@@ -159,6 +159,7 @@ function clearToken(){
 }
 
 function verify_user_type(){
+    //var token = localStorage.getItem("token");
     const urlParams = new URLSearchParams(window.location.search);
     var token = urlParams.get("token");
     var table = document.getElementById("table_main");
@@ -179,14 +180,16 @@ function verify_user_type(){
 
             var form_auth_checkin =document.createElement("form");
             form_auth_checkin.method="POST";
-            form_auth_checkin.action="/checkin";
+            //visna controlla
+            //form_auth_checkin.action="/checkin";
+            form_auth_checkin.action="/auth_checkin";
             form_auth_checkin.className="form";
 
             var button_auth_checkin = document.createElement("input");
             button_auth_checkin.type="submit";
             button_auth_checkin.name="submit_checkin";
             button_auth_checkin.className="button_main";
-            button_auth_checkin.value="Effettua check-in";
+            button_auth_checkin.value="Autorizza check-in";
 
             form_auth_checkin.appendChild(button_auth_checkin);
             td_auth_checkin.appendChild(form_auth_checkin);
