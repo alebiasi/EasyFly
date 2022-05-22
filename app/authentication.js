@@ -14,12 +14,16 @@ router.post('/login', async function(req,res){
 
     // user not found
 	if (!user) {
-		res.json({ success: false, message: 'Authentication failed. User not found.' }).redirect("/login?error=user");
+		//res.json({ success: false, message: 'Authentication failed. User not found.' }).redirect("/login?error=user");
+        res.status(400).redirect("/login?error=user");
+        return;
 	}
 
 	// check if password matches
 	if (user.password != req.body.password) {
-		res.json({ success: false, message: 'Authentication failed. Wrong password.' }).redirect("/login?error=psw");
+		//res.json({ success: false, message: 'Authentication failed. Wrong password.' }).redirect("/login?error=psw");
+        res.status(400).redirect("/login?error=psw");
+        return;
 	}
 
     // if user is found and password is right create a token
@@ -49,7 +53,7 @@ router.post('/login', async function(req,res){
 		id: user._id,
 		self: "api/v1/" + user._id
 	});*/
-	res.status(302).redirect("/main_page?token="+token);
+	res.status(200).redirect("/main_page?token="+token);
 });
 
 //route di registrazione

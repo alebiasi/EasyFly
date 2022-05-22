@@ -25,14 +25,14 @@
         </div>
 
         <main>
-            <div class="loginText" onload="checkerrors()">
+            <div class="loginText">
                 LOGIN
             </div>
             <div class="loginDiv">
-                <div id="error1" hidden="true">
+                <div id="error1" hidden="true" class="errorClass">
                     <h2>Attenzione! le credenziali inserite non sono valide.</h2>
                   </div>
-                <div id="error1" hidden="true">
+                <div id="error2" hidden="true" class="errorClass">
                     <h2>Attenzione! La password inserita non risulta valida.</h2>
                 </div>
                 <form action="/api/v1/authentication/login" method="POST" name="email" id="loginForm">
@@ -74,10 +74,15 @@
                     <br>-->
                     <input type="submit" class="subLogin" value="Accedi">
                 </form>
-                Noi ti sei ancora iscritto?
                 <br>
-                <button onclick="location.href = '/register'" value="registrati" class="subLogin">Registrati</button>
+                <div class="messageRegister">
+                    Noi ti sei ancora iscritto?
+                </div>
+                <button onclick="location.href = '/register'" value="registrati" class="subReg">Registrati</button>
             </div>
         </main>
     </body>
+    <script>
+        checkerrors();
+    </script>
 </html>

@@ -307,7 +307,10 @@ function create_standard_page(){
 
 //controllo errori pagina login
 function checkerrors(){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
     var error = urlParams.get("error");
+    //document.getElementById("prova").innerText="ciaoaaaasdfsdgfdsgfdg";
     if(error=="user"){
         document.getElementById("error1").hidden=false;
     }
