@@ -91,8 +91,9 @@ router.post('/', async (req, res) => {
 
             UpdateDocument(fields.uid, parseInt(fields.document_type), dbPath);
 
-            res.status(200).write("<h1>Documenti salvati con successo!</h1> \
-            <a href='../../documents_page.html'>Ok</a>");
+            res.status(200).write("<html><head><link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../style.css\"></head> \
+            <body> <div class=\"flightsContainer\"><h1>Documenti salvati con successo!</h1> \
+            <a href='../../main_page'>Ok</a></body></a></html>");
         });
     });
 });
