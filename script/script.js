@@ -108,7 +108,14 @@ function load_requests(){
 };
 function update_request(id,value){  //update the status of a specific request when the user click the accept or decline button
     const data = {status:value,token:window.localStorage.getItem("token")};
-    fetch("/api/v1/requests/"+id,{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)}).then(location.reload());
+    /*if(id==1){
+        var doc = new jsPDF();
+        doc.text(10,10,"Test pdf creation");
+    }*/
+    fetch("/api/v1/requests/"+id,{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
+    //.then(fetch("api/v1/save_documents",{method:"POST",headers: {'Content-Type': 'application/pdf',},body:JSON.stringify({filetoupload:doc})})) //todo verify if this works
+    .then(location.reload());
+    
 };
 
 function left_arrow_click(){
@@ -163,6 +170,9 @@ function verify_user_type(){
     const urlParams = new URLSearchParams(window.location.search);
     var token = urlParams.get("token");
     var table = document.getElementById("table_main");
+    if(token==null){
+        token=window.localStorage.getItem("token");
+    }
     if(token==null){    //standard non logged user
         //show standard main page
         create_standard_page();
@@ -180,8 +190,6 @@ function verify_user_type(){
 
             var form_auth_checkin =document.createElement("form");
             form_auth_checkin.method="POST";
-            //visna controlla
-            //form_auth_checkin.action="/checkin";
             form_auth_checkin.action="/auth_checkin";
             form_auth_checkin.className="form";
 

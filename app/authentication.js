@@ -31,6 +31,7 @@ router.post('/login', async function(req,res){
 		email: user.email,
 		id: user._id,
 		admin: user.admin
+
 		// other data encrypted in the token	
 	}
 	var options = {
