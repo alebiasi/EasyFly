@@ -73,12 +73,14 @@ router.post('/registration', async function(req,res){
 		email: req.body.email
 	}).exec();
     if (user) {
-		res.status(400).json({ error: 'Esiste già un utente con questo indirizzo email' });
+		//res.status(400).json({ error: 'Esiste già un utente con questo indirizzo email' });
+        res.status(400).redirect("/register?error=user");
         return;
 	}
     //controllo la correttezza dei campi
     if (!newUser.email || !newUser.name || !newUser.surname || typeof newUser.email != 'string' || !checkIfEmailInString(newUser.email)) {
-        res.status(400).json({ error: 'Non tutti i campi sono stati compilati correttamente' });
+        //res.status(400).json({ error: 'Non tutti i campi sono stati compilati correttamente' });
+        res.status(400).redirect("/register?error=incorrect");
         return;
     }
 

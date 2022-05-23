@@ -32,7 +32,12 @@
             </div>
 
             <br><br>
-
+            <div id="error1" hidden="true" class="errorClass">
+                <h2>Attenzione! Un utente con questo indirizzo email esiste già.</h2>
+              </div>
+            <div id="error2" hidden="true" class="errorClass">
+                <h2>Attenzione! Assicurati di compilare tutti i campi correttamente.</h2>
+            </div>
             <div class="regForm">
                 <form action="/api/v1/authentication/registration" method="POST" class="registration">
                     <input type="text" placeholder="Nome" class="inputText" name="name" id="name">
@@ -48,4 +53,7 @@
             </div>
         </main>
     </body>
+    <script>
+        checkerrorsReg();
+    </script>
 </html>

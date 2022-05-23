@@ -321,3 +321,17 @@ function checkerrors(){
         document.getElementById("error2").hidden=false;
     }
 }
+
+//controllo errori pagina registrazione
+function checkerrorsReg(){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var error = urlParams.get("error");
+    //document.getElementById("prova").innerText="ciaoaaaasdfsdgfdsgfdg";
+    if(error=="user"){
+        document.getElementById("error1").hidden=false;
+    }
+    if(error=="incorrect"){
+        document.getElementById("error2").hidden=false;
+    }
+}
