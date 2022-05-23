@@ -35,15 +35,16 @@ router.post('/logout', async function(req,res){
 
 	// if there is no token
 	if (!token) {
-		console.log("No token");
-		return res.status(401).send({ 
+        /*return res.status(401).send({ 
 			success: false,
 			message: 'No token provided.'
-		});
+		});*/
+        // redirect to main page
+		return res.status(401).redirect("/login?error=notLogged");
 	}
 
     // redirect to main page and token will be cleared in script.js
-    res.status(202).redirect("/main_page");
+    res.status(200).redirect("/main_page");
 
 });
 

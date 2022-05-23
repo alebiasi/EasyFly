@@ -154,7 +154,7 @@ function refreshLoginLogout () {
 
 
 function clearToken(){
-    localStorage.clear();
+    localStorage.removeItem("token");
 
 }
 
@@ -319,6 +319,9 @@ function checkerrors(){
     }
     if(error=="psw"){
         document.getElementById("error2").hidden=false;
+    }
+    if(error=="notLogged"){
+        document.getElementById("error3").hidden=false;
     }
 }
 
