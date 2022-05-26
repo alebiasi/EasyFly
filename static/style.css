@@ -63,13 +63,13 @@ body {
     margin: 5%;
 }
 
-.loginForm, .flightsContainer, .documentsContainer {
+.loginForm, .flightsContainer, .documentsContainer, .mainContainer {
     margin-top: 5%;
     margin-left: 5%;
     width: 90%;
 }
 
-.flightsContainer, .documentsContainer {
+.flightsContainer, .documentsContainer, .mainContainer {
     margin-top: 35%;
 }
 
