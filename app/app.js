@@ -12,6 +12,8 @@ const airport_maps = require("./airport_maps.js");
 const auth = require("./authentication.js");
 var util = require("util");
 const disconnect = require('./disconnect.js');
+const delete_documents = require("./delete_documents.js");
+
 /**
  * configure parsing middleware
  */
@@ -82,6 +84,7 @@ app.use("/api/v1/boarding_cards", boarding_cards);
 app.use("/api/v1/documents", documents);
 app.use("/api/v1/save_documents", save_documents);
 app.use("/api/v1/disconnect", disconnect);
+app.use("/api/v1/delete_documents", delete_documents);
 
 app.use((req, res) => {
     res.status(404);

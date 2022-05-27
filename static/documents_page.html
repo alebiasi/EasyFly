@@ -136,7 +136,11 @@
                     <input type="submit" value="Carica" hidden id="submitid">
                 </form>
 
-                
+                <form action="/api/v1/delete_documents" onsubmit="giveUid();" method="post" id="formDeleteId">
+                    <input type="hidden" name="uid" id="uid_2" value="">
+                    <input type="hidden" name="document_type" value="0">
+                    <input type="submit" value="Rimuovi documento" id="delId">
+                </form>
 
                 <hr>
                 <h1>Passporto</h1>
@@ -147,6 +151,12 @@
                     <input type="hidden" name="document_type" value="1">
                     <input type="file" name="filetoupload" onchange="checkUpoadButton()" id="filepassport"><br>
                     <input type="submit" value="Carica" hidden id="submitpassport">
+                </form>
+
+                <form action="/api/v1/delete_documents" onsubmit="giveUid();" method="post" id="formDeletePassport">
+                    <input type="hidden" name="uid" id="uid_3" value="">
+                    <input type="hidden" name="document_type" value="1">
+                    <input type="submit" value="Rimuovi documento" id="delPass">
                 </form>
 
                 <hr>

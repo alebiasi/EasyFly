@@ -71,10 +71,25 @@ function loadDocuments(userId) {
         })
     })
     .catch( error => console.error(error) );// If there is any error you will catch them here
+
 }
 
 loadBoardingCard(getToken());
 loadDocuments(getToken());
+
+/*
+function saveDocument() {
+    const Document = require('./models/document');
+
+    document.save()
+        .then(() => {
+            console.log('Saved succesfully!')
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+*/
 
 function saveDocument(src) {
 
@@ -116,3 +131,29 @@ function checkUpoadButton() {
     if (filepassport.value != "") subpassport.hidden = false;
     else subpassport.hidden = true;
 }
+
+function giveUid() {
+    let idDel = document.getElementById('uid_2');
+    let passDel = document.getElementById('uid_3');
+
+    idDel.value = getToken();
+    passDel.value = getToken();
+}
+
+/*function hideDelButton() {
+    const idImg = document.getElementById('id_img'); // Get the img of ID
+    const passportImg = document.getElementById('passport_img'); // Get the img of Passport
+
+    let delId = document.getElementById('delId');
+    let delPass = document.getElementById('delPass');
+
+    if((idImg.src).includes('imgs/none.png')) {
+        delId.style.display = 'none';   // do not show button
+    }
+    else delId.style.removeProperty('display');
+
+    if(passportImg.src == './imgs/none.png') {
+        delPass.style.display = 'none';     // do not show button
+    }
+    else delId.style.removeProperty('display');
+}*/
