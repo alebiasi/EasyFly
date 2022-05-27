@@ -154,8 +154,8 @@
         /*calculate the cursor's x and y coordinates, relative to the image:*/
 
 
-        x = e.pageX - a.left;
-        y = e.pageY - a.top;
+        x = e.changedTouches[0].pageX - a.left;
+        y = e.changedTouches[0].pageY - a.top;
 
         /*consider any page scrolling:*/
         x = x - window.pageXOffset;
@@ -164,8 +164,6 @@
     }
 
     function move(e){
-
-        e = e.changedTouches;
 
         pos = getCursorPos(e);
         //e.preventDefault();
@@ -177,20 +175,12 @@
             firstClick = !firstClick;
         }
 
-
-        //newX = e.clientX - offsetx;
-        //newY = e.clientY - offsety;
         newX = (pos.x - offsetx);
         newY = (pos.y - offsety);
-
-        //image.style.left = newX + "px";
-        //image.style.top = newY + "px";
 
         console.log(offsetx, offsety);
 
         image.style.backgroundPosition = "" + newX + "px " + newY + "px";
-
-
     }
 
     function initialClick(e) {
