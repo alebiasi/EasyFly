@@ -173,3 +173,12 @@ body {
     border-radius: 30px 30px 30px;
     font-size: 150%;
 }
+
+button, input[type="submit"] {
+    transition: .2s;
+}
+button:hover, input[type="submit"]:hover {
+    background-color: #2bb7fc;
+    transform: scale(1.1);
+    box-shadow: 5px 5px 10px rgba(150, 150, 150, .2);
+}

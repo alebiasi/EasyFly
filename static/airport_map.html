@@ -153,9 +153,8 @@
         a = image.getBoundingClientRect();
         /*calculate the cursor's x and y coordinates, relative to the image:*/
 
-
-        x = e.changedTouches[0].pageX - a.left;
-        y = e.changedTouches[0].pageY - a.top;
+        x = (e.pageX || e.changedTouches[0].pageX) - a.left;
+        y = (e.pageY || e.changedTouches[0].pageY) - a.top;
 
         /*consider any page scrolling:*/
         x = x - window.pageXOffset;
@@ -177,8 +176,6 @@
 
         newX = (pos.x - offsetx);
         newY = (pos.y - offsety);
-
-        console.log(offsetx, offsety);
 
         image.style.backgroundPosition = "" + newX + "px " + newY + "px";
     }
