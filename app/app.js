@@ -36,6 +36,7 @@ app.use((req,res,next) => {
  */
 app.use('/api/v1/authentication',auth);
 app.use("/api/v1/requests",tokenchecker);
+//app.use("/api/v2/requests",tokenchecker);
 app.use("/checkin",tokenchecker);
 app.use("/api/v2/flights",tokenchecker);
 app.use("/flights_controller",tokenchecker);
@@ -87,6 +88,7 @@ app.use("/report_delay",function(req,res){
 });
 
 app.use("/api/v1/requests",checkin);
+app.use("/api/v2/requests",checkin);
 app.use("/api/v1/flights", flights);
 app.use("/api/v1/boarding_cards", boarding_cards);
 app.use("/api/v1/documents", documents);

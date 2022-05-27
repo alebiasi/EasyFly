@@ -9,7 +9,6 @@
     fetch('../api/v1/flights')
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) { // Here you get the data to modify as you please
-        console.log(data);
 
         // console.log(data);
         
@@ -58,6 +57,7 @@
             form.method="POST";
             form.action="/report_delay";
             var button = document.createElement("input");
+            //button.onclick=send_report(window.localStorage.getItem("token"),flight.cod);
             button.type="submit";
             button.name="button_report_delay";
             button.value="Segnala ritardo"
@@ -73,6 +73,7 @@
 
             form.appendChild(token);
             form.appendChild(button);
+            form.appendChild(button);
             td.appendChild(form);
             tr.appendChild(td);
             table.appendChild(tr);
@@ -86,13 +87,24 @@
 }
 
 function insert_flight(){
-    var form_delay = document.getElementById("form_delay");
-    form_delay.action="/api/v2/flight/"+window.localStorage.getItem("flight_code");
+    var myform = document.getElementById("form");
+    var mybutton = document.createElement("button");
+    mybutton.name="invia";
+    mybutton.value="Invia";
+    mybutton.textContent="Invia";
+    mybutton.setAttribute("onclick","send_report();");
+    var delay_minutes = document.createElement("input");
+    delay_minutes.type="number";
+    delay_minutes.id="delay_minutes";
+    delay_minutes.required=true;
+    delay_minutes.placeholder="Minuti di ritardo";
 
-    var token = document.createElement("input");
-    token.type="hidden";
-    token.name=token;
-    token.value=window.localStorage.getItem("token");
+    myform.appendChild(delay_minutes);
+    myform.appendChild(mybutton);
+}
 
-    form.appendChild(token);
+function send_report(){
+    var data = {token:window.localStorage.getItem("token"),delay:document.getElementById("delay_minutes").value};
+    fetch("/api/v2/flights/"+window.localStorage.getItem("flight_code"),{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
+    .then(window.localStorage.removeItem("flight_code")).then( window.location.href="/flights_controller?token="+window.localStorage.getItem("token"));
 }
