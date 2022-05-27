@@ -14,12 +14,14 @@
                 z-index: 10;
             }
             .map {
-                width: 1920px;
-                height: 1080px;
+                width: 100%;
+                height: 100%;
+
+                background-size: 1920px 1080px;
                 position: absolute;
-                background-image: url("/maps/1_map.jpg");
-                top: -100px;
-                left: -500px;
+                background-image: url("/maps/404.png");
+                top: 0;
+                left: 0;
             }
             .bottom_menu {
                 position: fixed;
@@ -60,6 +62,10 @@
                 font-weight: bold;
                 padding: 0 .7em;
             }
+            /* to disable touch scrolling */
+            .map {
+                touch-action: none;
+            }
         </style>
     </head>
     <body>
@@ -72,8 +78,7 @@
                     <td class="serviceName">
                         <b>Mappa aeroporto</b>
                     </td>
-                    <td class="verticalDots">
-                        <img src="./imgs/Vertical dots.png"/>
+                    <td class="verticalDots">     
                     </td>
                 </tr>
             </table>
@@ -125,43 +130,83 @@
     </body>
 </html>
 <script>
-    var dog = document.getElementById("map");
+    var map = document.getElementById("map");
     var moving = false;
     var firstClick = true;
 
     let offsetx = 0, offsety = 0;
+    let cx, cy;
     
-    let lastx = -499, lasty = -99;
+    let lastx = -0, lasty = -0;
     var newX, newY;
 
-    dog.addEventListener("mousedown", initialClick, false);
-    dog.addEventListener("mouseup", finalClick, false);
+    map.addEventListener("mousedown", initialClick, false);
+    map.addEventListener("mouseup", finalClick, false);
+
+    map.addEventListener("touchstart", initialClick, false);
+    map.addEventListener("touchend", finalClick, false);
+
+    function getCursorPos(e) {
+        var a, x = 0, y = 0;
+        e = e || window.event;
+        /*get the x and y positions of the image:*/
+        a = image.getBoundingClientRect();
+        /*calculate the cursor's x and y coordinates, relative to the image:*/
+
+
+        x = e.pageX - a.left;
+        y = e.pageY - a.top;
+
+        /*consider any page scrolling:*/
+        x = x - window.pageXOffset;
+        y = y - window.pageYOffset;
+        return {x : x, y : y};
+    }
 
     function move(e){
 
+        e = e.changedTouches;
+
+        pos = getCursorPos(e);
+        //e.preventDefault();
+
+
         if(firstClick) {
-            offsetx = e.clientX - lastx;
-            offsety = e.clientY - lasty;
+            offsetx = (pos.x - lastx );
+            offsety = (pos.y - lasty );
             firstClick = !firstClick;
         }
 
-        newX = e.clientX - offsetx;
-        newY = e.clientY - offsety;
 
-        image.style.left = newX + "px";
-        image.style.top = newY + "px";
+        //newX = e.clientX - offsetx;
+        //newY = e.clientY - offsety;
+        newX = (pos.x - offsetx);
+        newY = (pos.y - offsety);
+
+        //image.style.left = newX + "px";
+        //image.style.top = newY + "px";
+
+        console.log(offsetx, offsety);
+
+        image.style.backgroundPosition = "" + newX + "px " + newY + "px";
+
+
     }
 
     function initialClick(e) {
+        
         window.getSelection()?.removeAllRanges();   
         moving = !moving;
         image = this;
 
         firstClick = true;
         document.addEventListener("mousemove", move, false);
+        /* also for touch screens:*/
+        document.addEventListener("touchmove", move, false);
     }
 
     function finalClick(e) {
+        
         window.getSelection()?.removeAllRanges();
         image = this;
 
@@ -169,6 +214,7 @@
             lastx = newX;
             lasty = newY;
             document.removeEventListener("mousemove", move);
+            document.removeEventListener("touchmove", move, false);
             moving = !moving;
             return;
         }
@@ -178,4 +224,22 @@
     function left_arrow_click() {
         location.href= "/main_page";
     }
+</script>
+<script>
+    var imgMap = document.getElementById("map");
+
+    function getMap(airport_id) {
+
+        fetch('../api/v1/airport_maps/'+airport_id)
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(data) {
+            
+            return data != null ? imgMap.style.backgroundImage = 'url("'+data.url_map+'")' : null;
+        })
+        .catch( error => console.error(error) );// If there is any error you will catch them here
+    }
+
+    //TODO: Ottenere il codice dell'aeroporto.
+    getMap("1234");
+
 </script>

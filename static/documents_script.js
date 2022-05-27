@@ -76,20 +76,6 @@ function loadDocuments(userId) {
 loadBoardingCard(getToken());
 loadDocuments(getToken());
 
-/*
-function saveDocument() {
-    const Document = require('./models/document');
-
-    document.save()
-        .then(() => {
-            console.log('Saved succesfully!')
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-*/
-
 function saveDocument(src) {
 
     fetch('../api/v1/save_documents/'+src)
