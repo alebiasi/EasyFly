@@ -204,7 +204,26 @@ function verify_user_type(){
             tr1.appendChild(td_auth_checkin);
             table.appendChild(tr1);
 
-            var  tr2 = document.createElement("tr");    //creazione bottone login /logout
+            var  tr2 = document.createElement("tr");    //creazione bottone autorizzazione check-in
+            var td_flights_update = document.createElement("td");
+
+            var form_flights_update =document.createElement("form");
+            form_flights_update.method="POST";
+            form_flights_update.action="/flights_controller";
+            form_flights_update.className="form";
+
+            var button_flights_update = document.createElement("input");
+            button_flights_update.type="submit";
+            button_flights_update.name="submit_checkin";
+            button_flights_update.className="button_main";
+            button_flights_update.value="Verifica stato voli";
+
+            form_flights_update.appendChild(button_flights_update);
+            td_flights_update.appendChild(form_flights_update);
+            tr2.appendChild(td_flights_update);
+            table.appendChild(tr2);
+
+            var  tr3 = document.createElement("tr");    //creazione bottone login /logout
             var td_login_logout = document.createElement("td");
 
             var form_login_logout =document.createElement("form");
@@ -222,8 +241,8 @@ function verify_user_type(){
 
             form_login_logout.appendChild(button_login_logout);
             td_login_logout.appendChild(form_login_logout);
-            tr2.appendChild(td_login_logout);
-            table.appendChild(tr2);
+            tr3.appendChild(td_login_logout);
+            table.appendChild(tr3);
         }else{  //standard logged user
             //show standard main page
             create_standard_page();

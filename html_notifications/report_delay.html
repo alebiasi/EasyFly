@@ -5,9 +5,9 @@
         <title>EasyFly</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
-        <script src="/script/script.js"></script>
+        <script src="/script/notification_script.js"></script>
     </head>
-    <body onload="verify_user_type(); insert_token(); refreshLoginLogout();">
+    <body onload="insert_flight()">
         <div class="upBorder">
             <table class="upTable">
                 <tr>
@@ -24,7 +24,10 @@
             </table>
         </div>
         <main> 
-            <table id="table_main"></table>
+            <form method="PUT" id="form_delay">
+                <input type="number" name="delay_minutes" placeholder="Minuti di ritardo">
+                <input type="submit" name="submit" value="Invia"> 
+            </form>
         </main>
     </body>
 </html>

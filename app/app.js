@@ -37,7 +37,9 @@ app.use((req,res,next) => {
 app.use('/api/v1/authentication',auth);
 app.use("/api/v1/requests",tokenchecker);
 app.use("/checkin",tokenchecker);
-
+app.use("/api/v2/flights",tokenchecker);
+app.use("/flights_controller",tokenchecker);
+app.use("/report_delay",tokenchecker);
 /**
  * routing
  */
@@ -74,13 +76,23 @@ app.use("/register",function(req,res){
     res.sendFile(mypath);
 });
 
+app.use("/flights_controller",function(req,res){
+    var mypath = path.join(__dirname,"../html_notifications/flight_change.html");
+    res.sendFile(mypath);
+});
+
+app.use("/report_delay",function(req,res){
+    var mypath = path.join(__dirname,"../html_notifications/report_delay.html");
+    res.sendFile(mypath);
+});
+
 app.use("/api/v1/requests",checkin);
 app.use("/api/v1/flights", flights);
 app.use("/api/v1/boarding_cards", boarding_cards);
 app.use("/api/v1/documents", documents);
 app.use("/api/v1/save_documents", save_documents);
 app.use("/api/v1/disconnect", disconnect);
-
+app.use("/api/v2/flights",flights);
 app.use((req, res) => {
     res.status(404);
     res.json({ error: '404: Not found' });

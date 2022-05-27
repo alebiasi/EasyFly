@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Flight = require('./models/flight'); // get our mongoose model
+var nodemailer = require('nodemailer');
 
 /**
  * Resource representation based on the following the pattern: 
@@ -66,5 +67,42 @@ router.post('', async (req, res) => {
     res.location("/api/v1/flights/" + flightId).status(201).send();
 });
 
+router.put(":code",async function(req,res){
+    var code = req.params.code;
+    try{
+        var delay=req.body.delay_minutes; 
+        var request = await Request.updateOne({"cod":code},{$set:{"delay":delay}}); //update entry
+        if(request.acknowledged==false){    //return message
+            res.status(404).send("Error"); 
+        }else{
+            //send email to all users saying that the flight is on late
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'easyfly.ids2@gmail.com',
+                    pass: 'EasyFlyIds2'
+                }
+            });
+            var mailOptions = {
+                from: 'easyfly.ids2@gmail.com',
+                to: 'nicolavisona1@gmail.com',
+                subject: 'Sending Email using Node.js',
+                text: 'That was easy!'
+            };
+
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+            });
+
+            res.status(302).redirect("/flights_controller");
+        }
+    }catch(error){
+        res.status(404).send("Error id "+id+" not found");
+    }
+});
 
 module.exports = router;
