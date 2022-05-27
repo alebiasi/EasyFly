@@ -77,6 +77,12 @@ app.use("/register",function(req,res){
     res.sendFile(mypath);
 });
 
+//info volo
+app.use("/info_volo",function(req,res){
+    var mypath = path.join(__dirname,"../html_info_volo/info_volo.html");
+    res.sendFile(mypath);
+});
+
 app.use("/api/v1/requests",checkin);
 app.use("/api/v1/flights", flights);
 app.use("/api/v1/airport_maps", airport_maps);
