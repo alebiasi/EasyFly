@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>EasyFly</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+        <style>
+            body {
+                width: 400;
+                height: 850;
+            }
+            .upBorder {
+                z-index: 10;
+            }
+            .map {
+                width: 100%;
+                height: 100%;
+
+                background-size: 1920px 1080px;
+                position: absolute;
+                background-image: url("/maps/404.png");
+                top: 0;
+                left: 0;
+            }
+            .bottom_menu {
+                position: fixed;
+                width: 93.5%;
+                height: 30%;
+                padding: 1em;
+                border-top-left-radius: 30px;
+                border-top-right-radius: 30px;
+                top: 70%;
+                left: 0;
+                background-color: white;
+                box-shadow: -5px -5px 6px rgba(0, 0, 0, 0.15);
+                color: rgb(130, 130, 130);
+            }
+            .places, .services {
+                padding: 1em 0;
+                vertical-align: middle;
+                overflow-x: auto;
+            }
+            .places img {
+                width: 50px;
+                height: 50px;
+                padding: 0 .5em;
+            }
+            .places td {
+                font-size: 80%;
+                color: #395577;
+                text-align: center;
+            }
+            .services {
+                margin-top: 2%;
+            }
+            .services table {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .services td {
+                font-weight: bold;
+                padding: 0 .7em;
+            }
+            /* to disable touch scrolling */
+            .map {
+                touch-action: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="upBorder" id="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="./imgs/Left arrow.png" onclick="left_arrow_click()"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Mappa aeroporto</b>
+                    </td>
+                    <td class="verticalDots">     
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <main>
+            <div class="mainContainer">
+                <div id="map" class="map"></div>
+            </div>
+            <div id="bottom_menu" class="bottom_menu">
+                <div style="text-align: center;">LEGENDA</div>
+                <div id="places" class="places">
+                    <table>
+                        <tr>
+                            <td><img src="./maps/menu_icons/arrivals.png" alt="arrivals"></td>
+                            <td><img src="./maps/menu_icons/ticket_office.png" alt="arrivals"></td>
+                            <td><img src="./maps/menu_icons/bar.png" alt="arrivals"></td>
+                            <td><img src="./maps/menu_icons/stairs.png" alt="arrivals"></td>
+                            <td><img src="./maps/menu_icons/info.png" alt="arrivals"></td>
+                            <td><img src="./maps/menu_icons/checkin.png" alt="arrivals"></td>
+                            <td><img src="./maps/menu_icons/gate.png" alt="arrivals"></td>
+                        </tr>
+                        <tr>
+                            <td>Arrivi</td>
+                            <td>Biglietteria</td>
+                            <td>Bar</td>
+                            <td>Scale</td>
+                            <td>Infopoint</td>
+                            <td>Checkin</td>
+                            <td>Gate</td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <div style="text-align: center;">LUOGHI</div>
+                <div id="services" class="services">
+                    <table>
+                        <tr>
+                            <td style="color: #EFE15E">Bagni</td>
+                            <td style="color: #85A456">Servizi</td>
+                            <td style="color: #DE994D">Scale</td>
+                            <td style="color: #019AAA">Relax</td>
+                            <td style="color: #9C7DAE">Enti</td>
+                            <td style="color: #D28595">VIP</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
+<script>
+    var map = document.getElementById("map");
+    var moving = false;
+    var firstClick = true;
+
+    let offsetx = 0, offsety = 0;
+    let cx, cy;
+    
+    let lastx = -0, lasty = -0;
+    var newX, newY;
+
+    map.addEventListener("mousedown", initialClick, false);
+    map.addEventListener("mouseup", finalClick, false);
+
+    map.addEventListener("touchstart", initialClick, false);
+    map.addEventListener("touchend", finalClick, false);
+
+    function getCursorPos(e) {
+        var a, x = 0, y = 0;
+        e = e || window.event;
+        /*get the x and y positions of the image:*/
+        a = image.getBoundingClientRect();
+        /*calculate the cursor's x and y coordinates, relative to the image:*/
+
+
+        x = e.changedTouches[0].pageX - a.left;
+        y = e.changedTouches[0].pageY - a.top;
+
+        /*consider any page scrolling:*/
+        x = x - window.pageXOffset;
+        y = y - window.pageYOffset;
+        return {x : x, y : y};
+    }
+
+    function move(e){
+
+        pos = getCursorPos(e);
+        //e.preventDefault();
+
+
+        if(firstClick) {
+            offsetx = (pos.x - lastx );
+            offsety = (pos.y - lasty );
+            firstClick = !firstClick;
+        }
+
+        newX = (pos.x - offsetx);
+        newY = (pos.y - offsety);
+
+        console.log(offsetx, offsety);
+
+        image.style.backgroundPosition = "" + newX + "px " + newY + "px";
+    }
+
+    function initialClick(e) {
+        
+        window.getSelection()?.removeAllRanges();   
+        moving = !moving;
+        image = this;
+
+        firstClick = true;
+        document.addEventListener("mousemove", move, false);
+        /* also for touch screens:*/
+        document.addEventListener("touchmove", move, false);
+    }
+
+    function finalClick(e) {
+        
+        window.getSelection()?.removeAllRanges();
+        image = this;
+
+        if(moving) {
+            lastx = newX;
+            lasty = newY;
+            document.removeEventListener("mousemove", move);
+            document.removeEventListener("touchmove", move, false);
+            moving = !moving;
+            return;
+        }
+    }
+</script>
+<script>
+    function left_arrow_click() {
+        location.href= "/main_page";
+    }
+</script>
+<script>
+    var imgMap = document.getElementById("map");
+
+    function getMap(airport_id) {
+
+        fetch('../api/v1/airport_maps/'+airport_id)
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(data) {
+            
+            return data != null ? imgMap.style.backgroundImage = 'url("'+data.url_map+'")' : null;
+        })
+        .catch( error => console.error(error) );// If there is any error you will catch them here
+    }
+
+    //TODO: Ottenere il codice dell'aeroporto.
+    getMap("1234");
+
+</script>

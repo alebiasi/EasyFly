@@ -314,6 +314,24 @@ function create_standard_page(){
     td_documenti.appendChild(form_documenti);
     tr4.appendChild(td_documenti);
     table.appendChild(tr4);
+
+    var  tr5 = document.createElement("tr");    //creazione tabellone documenti
+    var td_airport_map = document.createElement("td");
+
+    var form_airport_map =document.createElement("form");
+    form_airport_map.method="GET";
+    form_airport_map.action="/airport_map.html";
+    form_airport_map.className="form";
+
+    var btn_airport_map = document.createElement("input");
+    btn_airport_map.type="submit";
+    btn_airport_map.className="button_main";
+    btn_airport_map.value="Mappa aeroporto";
+
+    form_airport_map.appendChild(btn_airport_map);
+    td_airport_map.appendChild(form_airport_map);
+    tr5.appendChild(td_airport_map);
+    table.appendChild(tr5);
 }
 
 //controllo errori pagina login

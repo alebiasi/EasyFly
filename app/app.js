@@ -8,6 +8,7 @@ const checkin = require("./checkin.js");
 const tokenchecker = require("./tokenchecker.js");
 const path = require('node:path');
 const flights = require("./flights.js");
+const airport_maps = require("./airport_maps.js");
 const auth = require("./authentication.js");
 var util = require("util");
 const disconnect = require('./disconnect.js');
@@ -76,6 +77,7 @@ app.use("/register",function(req,res){
 
 app.use("/api/v1/requests",checkin);
 app.use("/api/v1/flights", flights);
+app.use("/api/v1/airport_maps", airport_maps);
 app.use("/api/v1/boarding_cards", boarding_cards);
 app.use("/api/v1/documents", documents);
 app.use("/api/v1/save_documents", save_documents);
