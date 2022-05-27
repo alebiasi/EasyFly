@@ -170,10 +170,10 @@ function verify_user_type(){
     const urlParams = new URLSearchParams(window.location.search);
     var token = urlParams.get("token");
     var table = document.getElementById("table_main");
-    if(token==null){
+    if(token==null || token==""){
         token=window.localStorage.getItem("token");
     }
-    if(token==null){    //standard non logged user
+    if(token==null || token==""){    //standard non logged user
         //show standard main page
         create_standard_page();
 
