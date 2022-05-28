@@ -156,6 +156,18 @@ body {
     border-radius: 30px 30px 30px;
     font-size: 150%;
 }
+.button_simple {
+    background-color: transparent;
+    border-color: transparent;
+    background-color: #395577;
+    color: #ffffff;
+    padding: 0.5em;
+    width: 55%;
+    margin-left: auto;
+    margin-top: 1%;
+    border-radius: 30px 30px 30px;
+    font-size: 150%;
+}
 .main{
     margin:0 auto;
 }
@@ -180,3 +192,15 @@ body {
 .error_message{
     text-align: center;
 }
+
+.centered_div{
+    width:400px;
+    margin: 0 auto;
+    text-align: center;
+}
+.form{
+    margin: 0 auto;
+    margin-top:5%;
+}
+
+

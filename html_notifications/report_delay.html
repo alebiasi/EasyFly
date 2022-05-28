@@ -6,13 +6,14 @@
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
         <script src="/script/notification_script.js"></script>
+        <script src="/script/script.js"></script>
     </head>
-    <body onload="insert_flight()">
+    <body onload="insert_token()">
         <div class="upBorder">
             <table class="upTable">
                 <tr>
                     <td class="leftArrow">
-                        <img src="/style/Left arrow.png"/>
+                        <img src="/style/Left arrow.png" onclick="left_arrow_click()"/>
                     </td>
                     <td class="serviceName">
                         <b>Main Page</b>
@@ -23,14 +24,16 @@
                 </tr>
             </table>
         </div>
-        <main> 
-            <div id="form">
-
+        <main id="main">
+            <div class="centered_div">
+                <form id="form" class="form" onsubmit="return send_report()" method="POST" action="/flights_controller">
+                    <div>
+                        <input type="number" name="delay_minutes" class="inputBox" id="delay_minutes" placeholder="Minuti di ritardo del volo:"required><label>*</label>
+                    </div>
+                    <input type="submit" name="invia" value="Invia" class="button_simple">
+                </form>
             </div>
-            <!--<form method="PUT" id="form_delay">
-                <input type="number" name="delay_minutes" placeholder="Minuti di ritardo">
-                <input type="submit" name="submit" value="Invia"> 
-            </form>-->
+            <div class="centered_div"><h6>* Inserire un numero negativo (es -1) per indicare che il volo è stato cancellato</h6></div>
         </main>
     </body>
 </html>

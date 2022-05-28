@@ -4,7 +4,6 @@ const Flight = require('./models/flight'); // get our mongoose model
 const Requests = require("./models/request");
 const User = require("./models/user");
 var nodemailer = require('nodemailer');
-const { response } = require('./app');
 const mongoose = require("mongoose");
 require("dotenv").config();
 /**
@@ -75,15 +74,15 @@ router.post('', async (req, res) => {
  * Update the delay of a specific flight and send email notification to all users of that flight
  */
 router.put("/:code",async function(req,res){
-    var code = req.params.code;
+    var code = req.params.code; //flight code
     try{
-        var delay=req.body.delay; 
+        var delay=req.body.delay; //delay minutes
         var request = await Flight.updateOne({"cod":code},{$set:{"delay":delay}}); //update entry
-        if(request.acknowledged==false){    //return message
+        if(request.acknowledged==false){    //verify if there is an error when updating and entry
             console.log("Error");
             res.status(404).send("Error"); 
         }else{
-            var transporter = nodemailer.createTransport({
+            var transporter = nodemailer.createTransport({  //create transporter to send email to users
                 service: 'gmail',
                 auth: {
                     user: 'easyfly.ids2@gmail.com',
@@ -91,19 +90,19 @@ router.put("/:code",async function(req,res){
                 }
             });
             var htmltext="";
-            if(delay>0)
+            if(delay>0) //create message to send
                 htmltext="<div><p>Gentile Utente,<br/>il team di EasyFly è dispiaciuto di informarla che il volo per cui ha effettuato il check-in è in ritardo di "+delay+" minuti.<br/>Ci scusiamo per l'inconveniente e le auguriamo una buona giornata.<br/>Il team di EasyFly</div>"
             else
                 htmltext="<div><p>Gentile Utente,<br/>il team di EasyFly è dispiaciuto di informarla che il volo per cui ha effettuato il check-in è stato cancellato.<br/>Ci scusiamo per l'inconveniente e le auguriamo una buona giornata.<br/>Il team di EasyFly</div>"
             var emails="";
 
-            var requests = await Requests.find({"booking_code":code});
+            var requests = await Requests.find({"booking_code":code});  //get all check-in requests with a specific code
             if(requests.acknowledged==false){   
                 console.log("Error");
                 res.status(404).send("Error"); 
             }else{
                 for(var i=0; i<requests.length;i=i+1){
-                    var user_id= requests[i].user_id;
+                    var user_id= requests[i].user_id; 
                     var mongoid = new mongoose.mongo.ObjectId(user_id);    //get id from req
                     var user= await User.findById(mongoid); //find user from id
                     var email = user.email; //get user email
@@ -112,14 +111,14 @@ router.put("/:code",async function(req,res){
                 }
             }
             console.log("Sending mail to: ",emails);
-            var mailOptions = {
+            var mailOptions = { //create email
                                 from: 'easyfly.ids2@gmail.com',
                                 to: emails, //send email to notify that the flight is on late / deleted
                                 subject: 'Sembra che ci siano problemi con il tuo volo',
                                 html: htmltext
                             };
             if(emails!=""){    //send mail if there is at least 1 passenger
-                transporter.sendMail(mailOptions, function(error, info){
+                transporter.sendMail(mailOptions, function(error, info){    //send email
                     if (error) {
                         console.log(error);
                     } else {

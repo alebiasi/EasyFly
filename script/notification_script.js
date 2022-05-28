@@ -13,20 +13,6 @@
         // console.log(data);
         
         return data.map(function(flight) { // Map through the results and for each run the code below
-            
-
-            // let bookId = book.self.substring(book.self.lastIndexOf('/') + 1);
-            /*
-            let li = document.createElement('li');
-            let span = document.createElement('span');
-            span.innerHTML = `<a href="${book.self}">${book.title}</a>`;
-            span.innerHTML += `<button type="button" onclick="takeBook('${book.self}')">Take the book</button>`
-            
-            // Append all our elements
-            li.appendChild(span);
-            ul.appendChild(li);
-            */
-
             let li = document.createElement('li');
             let table = document.createElement('table')
 
@@ -51,6 +37,7 @@
             tr.innerHTML += `<td><img src="imgs/walker.png" class="flightIcon"/>${gateFormatted}</td>`;
             table.appendChild(tr);
 
+            //add button to report a delay
             tr = document.createElement("tr");
             var td= document.createElement("td");
             var form = document.createElement("form");
@@ -63,6 +50,7 @@
             button.value="Segnala ritardo"
             button.className="button_main";
 
+            //add token for authorization
             var token = document.createElement("input");
             token.type="hidden";
             token.name="token";
@@ -86,25 +74,25 @@
     
 }
 
-function insert_flight(){
-    var myform = document.getElementById("form");
-    var mybutton = document.createElement("button");
-    mybutton.name="invia";
-    mybutton.value="Invia";
-    mybutton.textContent="Invia";
-    mybutton.setAttribute("onclick","send_report();");
-    var delay_minutes = document.createElement("input");
-    delay_minutes.type="number";
-    delay_minutes.id="delay_minutes";
-    delay_minutes.required=true;
-    delay_minutes.placeholder="Minuti di ritardo";
-
-    myform.appendChild(delay_minutes);
-    myform.appendChild(mybutton);
-}
-
+/**
+ * function to send the correct put request to the api (cannot just set method="PUT" in the form as it is not supported)
+ * @returns true if everything went correctly, false otherwise
+ */
 function send_report(){
-    var data = {token:window.localStorage.getItem("token"),delay:document.getElementById("delay_minutes").value};
-    fetch("/api/v2/flights/"+window.localStorage.getItem("flight_code"),{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
-    .then(window.localStorage.removeItem("flight_code")).then( window.location.href="/flights_controller?token="+window.localStorage.getItem("token"));
+    var success=false;
+    var delay_minutes = document.getElementById("delay_minutes").value; //get the delay value (here it cannot be null because of the required attribute)
+    var data = {token:window.localStorage.getItem("token"),delay:delay_minutes};
+    //send update request to api
+    try{
+        fetch("/api/v2/flights/"+window.localStorage.getItem("flight_code"),{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
+        .then(window.localStorage.removeItem("flight_code")).then(success=true);
+    }catch(error){
+        //catch if there is an error
+        console.log(error);
+        //notify user
+        alert("Qualcosa è andato storto, si prega di riprovare. Se il problema persiste contattare l'assistenza");
+        success=false;
+    }
+    return success;
+
 }

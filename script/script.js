@@ -142,7 +142,6 @@ function refreshLoginLogout () {
     var form = document.getElementById("formLoginLogout");
     var btn = document.getElementById("btnLoginLogout");
 
-    console.log(form, btn);
 
     if(localStorage.getItem("token")) {
         form.action = "/api/v1/disconnect/logout";
