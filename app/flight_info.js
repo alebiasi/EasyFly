@@ -4,9 +4,10 @@ const Flight = require('./models/flight');
 const bc = require('./models/boarding_card'); 
 const infoFlight = require('./models/infoFlight');
 
+
 router.get('/:id', async (req, res) => {
     //verifico se trovo per un certo utente una carta d'imbarco.
-    let imbarco = await bc.findById(req.params.id);
+    let imbarco = await bc.find({ uid: req.params.id});
     if(!imbarco){
         res.status(400).json({error: "non possiedi una carta d'imbarco per alcun volo"});
     }
@@ -37,3 +38,5 @@ router.get('/:id', async (req, res) => {
         });
     }
 });
+
+module.exports = router;
