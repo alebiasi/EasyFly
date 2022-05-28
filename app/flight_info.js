@@ -7,15 +7,17 @@ const infoFlight = require('./models/infoFlight');
 
 router.get('/:id', async (req, res) => {
     //verifico se trovo per un certo utente una carta d'imbarco.
-    let imbarco = await bc.find({ uid: req.params.id});
-    if(!imbarco){
+    let imbarco = await bc.findOne({ uid: req.params.id}).exec();
+    if(imbarco==null){
+    //if(await bc.exists({ uid: req.params.id})==null){
         res.status(400).json({error: "non possiedi una carta d'imbarco per alcun volo"});
     }
     else{
         //recupero le informazioni del volo specifico
-        let info1 = await Flight.find({ cod: imbarco.flight_code});
-        let info2 = await infoFlight.find({ flight_code: imbarco.flight_code});
+        /*let info1 = await Flight.findOne({ cod: imbarco.flight_code}).exec();
+        let info2 = await infoFlight.findOne({ flight_code: imbarco.flight_code}).exec();
         res.status(200).json({
+            id: req.params.id,
             self: '/api/v1/flightInfo/',
             cod: info1.cod,
             hour: info1.hour,
@@ -35,6 +37,9 @@ router.get('/:id', async (req, res) => {
             estimate_arrive: info2.estimate_arrive,
             start_location: info2.start_location,
             arrive_location: info2.arrive_location
+        });*/
+        res.status(200).json({
+            id: req.params.id
         });
     }
 });

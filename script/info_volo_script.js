@@ -55,7 +55,7 @@ function verifyHowtoLoad(){
             else{
                 var main = document.getElementById('main');
                 var div = document.createElement('div');
-                div.innerHTML= data['cod'];
+                div.innerHTML= data['id'];
                 main.appendChild(div);
             }
                 /*tableDocuments.innerHTML += `<tr><td>Nome</td><td>${boardingCard.name}</td></tr>`;
