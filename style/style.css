@@ -156,6 +156,18 @@ body {
     border-radius: 30px 30px 30px;
     font-size: 150%;
 }
+.button_simple {
+    background-color: transparent;
+    border-color: transparent;
+    background-color: #395577;
+    color: #ffffff;
+    padding: 0.5em;
+    width: 55%;
+    margin-left: auto;
+    margin-top: 1%;
+    border-radius: 30px 30px 30px;
+    font-size: 150%;
+}
 .main{
     margin:0 auto;
 }
@@ -188,4 +200,13 @@ button:hover, input[type="submit"]:hover {
     background-color: #2bb7fc;
     transform: scale(1.1);
     box-shadow: 5px 5px 10px rgba(150, 150, 150, .2);
+}
+.centered_div{
+    width:400px;
+    margin: 0 auto;
+    text-align: center;
+}
+.form{
+    margin: 0 auto;
+    margin-top:5%;
 }

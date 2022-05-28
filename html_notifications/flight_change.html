@@ -1,0 +1,52 @@
+    <!DOCTYPE html>
+<!--html page to change flight arrival time-->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>EasyFly</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='/style/style.css'>
+        <link rel='stylesheet' type='text/css' media='screen' href='/style.css'>
+        <script src="/script/notification_script.js"></script>
+        <script src="/script/script.js"></script>
+    </head>
+    <body onload="loadFlights()">
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="/style/Left arrow.png"  onclick="left_arrow_click()"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Segnala ritardo voli</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="/style/Vertical dots.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <main>
+            <div class="flightsContainer">
+                <ul id="flights">
+                    <li class="flightBox">
+                        <table>
+                            <tr>
+                                <td><img src="imgs/clock.png" class="flightIcon"/> 09:25</td>
+                                <td><img src="imgs/aeroplane.png" class="flightIcon"/>Compagnia</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><img src="imgs/comment.png" class="flightIcon"/>In orario</td>
+                            </tr>
+                            <tr>
+                                <td><img src="imgs/list.png" class="flightIcon"/>Codice volo</td>
+                                <td><img src="imgs/walker.png" class="flightIcon"/>Gate: n</td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </body>
+</html>

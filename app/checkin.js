@@ -72,6 +72,7 @@ router.get("/:id",async function(req,res){
     }
 });
 
+
 router.post("/:id",function(req,res){
     res.status(504).send("Method not allowed");
 });
@@ -116,5 +117,6 @@ router.delete("/:id",async function(req,res){
     
     
 });
+
 
 module.exports = router;
