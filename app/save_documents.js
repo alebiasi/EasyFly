@@ -79,22 +79,24 @@ router.post('/', async (req, res) => {
         var form = new formidable.IncomingForm();
 
         form.parse(req, function (err, fields, files) {
-        var oldpath = files.filetoupload.filepath;
+            console.log(fields);
+            console.log(files);
+            var oldpath = files.filetoupload.filepath;
+            
+            let id = makeid(16);
+            let src = files.filetoupload.originalFilename;
+            let newpath = './static/documents/' + id + src.substring(src.lastIndexOf('.'));
+            let dbPath = './documents/' + id + src.substring(src.lastIndexOf('.'));
 
-        let id = makeid(16);
-        let src = files.filetoupload.originalFilename;
-        let newpath = './static/documents/' + id + src.substring(src.lastIndexOf('.'));
-        let dbPath = './documents/' + id + src.substring(src.lastIndexOf('.'));
+            fs.rename(oldpath, newpath, function (err) {
+                if (err) throw err;
 
-        fs.rename(oldpath, newpath, function (err) {
-            if (err) throw err;
+                UpdateDocument(fields.uid, parseInt(fields.document_type), dbPath);
 
-            UpdateDocument(fields.uid, parseInt(fields.document_type), dbPath);
-
-            res.status(200).write("<html><head><link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../style.css\"></head> \
-            <body> <div class=\"flightsContainer\"><h1>Documenti salvati con successo!</h1> \
-            <a href='../../main_page'>Ok</a></body></a></html>");
-        });
+                res.status(200).write("<html><head><link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../style.css\"></head> \
+                <body> <div class=\"flightsContainer\"><h1>Documenti salvati con successo!</h1> \
+                <a href='../../main_page'>Ok</a></body></a></html>");
+            });
     });
 });
 

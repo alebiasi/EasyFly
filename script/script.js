@@ -108,13 +108,19 @@ function load_requests(){
 };
 function update_request(id,value){  //update the status of a specific request when the user click the accept or decline button
     const data = {status:value,token:window.localStorage.getItem("token")};
-    /*if(id==1){
-        var doc = new jsPDF();
-        doc.text(10,10,"Test pdf creation");
-    }*/
     fetch("/api/v1/requests/"+id,{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
-    //.then(fetch("api/v1/save_documents",{method:"POST",headers: {'Content-Type': 'application/pdf',},body:JSON.stringify({filetoupload:doc})})) //todo verify if this works
-    .then(location.reload());
+    .then(()=>{
+        if(value==1){
+            var doc = new jsPDF();
+            doc.text(10,10,"Test pdf creation");
+            doc.save(); //cration and save of pdf
+            
+            var fd = new FormData();
+            fd.append("files",doc);
+            fetch("api/v1/save_documents",{method:"POST",body:fd})
+        }
+    }) //todo verify if this works
+    /*.then(location.reload());*/
     
 };
 
