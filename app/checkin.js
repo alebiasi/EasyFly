@@ -55,7 +55,7 @@ router.get("/pending",async function(req,res){
     res.status(200).json(rispostajson); //send object
 });
 /**
- * get a specific request
+ * get a specific user
  */
 router.get("/:id",async function(req,res){
     var id = req.params.id;

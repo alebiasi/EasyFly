@@ -1,3 +1,6 @@
+/**
+ * function used to load all the pending check-in requests
+ */
 function load_requests(){
     fetch("/api/v1/requests/pending?token="+window.localStorage.getItem("token"),{method:'GET'}).then((resp)=>resp.json()).then(function(data){ //get all requests from api
         var body= document.getElementById("table");
@@ -106,38 +109,54 @@ function load_requests(){
     })
     .catch(error => console.log(error));
 };
+
+/**
+ * this function update the status of a check-in request and, if the request is accepted, create the boarding document and send it to the backend
+ * @param  id id of the request
+ * @param  value value to update the status of the request (0:pending, 1: accepted, 2:denied)
+ * @param  user_id the id of the user that made the request
+ * @param  flight_code id of the flight
+ */
 function update_request(id,value,user_id,flight_code){  //update the status of a specific request when the user click the accept or decline button
     const data = {status:value,token:window.localStorage.getItem("token")};
+
     fetch("/api/v1/requests/"+id,{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
     .then(()=>{
-        if(value==1){
-            var doc = new jsPDF();
-            doc.text(20,20,"Carta d'imbarco");
-            fetch("/api/v1/users/"+user_id).then((resp)=>resp.json()).then(function(data){
-                doc.text(20,40,"Name: "+data.name);
+        if(value==1){   //if the check-in request is accepted create the boarding card and send it to back-end
+            fetch("/api/v1/authentication/users/"+user_id).then((resp)=>resp.json()).then(function(data){
+
+                var doc = new jsPDF();
+                doc.text(20,20,"Boarding Card");
+                doc.text(20,40,"Name: "+data.name); //creation of a basic boarding card
                 doc.text(20,60,"Surname: "+data.surname);
                 doc.text(20,80,"Email: "+data.email);
                 doc.text(20,100,"Flight: "+flight_code);
-                doc.save(); //cration and save of pdf
-                //doc.name="test";
-                var blobPDF =  new Blob([ doc.output() ], { type : 'application/pdf'});
+                doc.text(20,120,"");
+
+                var blobPDF =  new Blob([ doc.output() ], { type : 'application/pdf'}); //convert pdf to blob to send it correctly to backend
                 var fd = new FormData();
-                fd.append("uid",user_id);
+                fd.append("uid",user_id);   //append information for the backend
                 fd.append("document_type","2");
-                fd.append("filetoupload",blobPDF,"boarding_card_"+user_id+".pdf");
-                fetch("api/v1/save_documents",{method:"POST",body:fd});
+                fd.append("filetoupload",blobPDF,"boarding_card_"+user_id+".pdf");  //append file
+
+                fetch("api/v1/save_documents",{method:"POST",body:fd}) //send file
+                .then(location.reload());
             });
             
         }
-    })
-    .then(location.reload());
-    
+    });   
 };
 
+/**
+ * simple function for the arrow on top of the page
+ */
 function left_arrow_click(){
     location.href="/main_page"; //send back to main page
 }
 
+/**
+ * function used to insert the user token inside a form so that it can be used in the backend when the form is sent
+ */
 function insert_token(){
     const urlParams = new URLSearchParams(window.location.search);
     var token =urlParams.get("token");
@@ -153,7 +172,9 @@ function insert_token(){
         forms[i].appendChild(hidden);
     }
 }
-
+/**
+ * function to change the login button in a logout button when the user is logged in and vice versa
+ */
 function refreshLoginLogout () {
     var form = document.getElementById("formLoginLogout");
     var btn = document.getElementById("btnLoginLogout");
@@ -174,12 +195,16 @@ function refreshLoginLogout () {
 }
 
 
-
+/**
+ * function used to remove the token from local storage when the user logs out
+ */
 function clearToken(){
     localStorage.removeItem("token");
 
 }
-
+/**
+ * function used to verify if the logged user is a standard or admin user and show the correct functionality based on that
+ */
 function verify_user_type(){
     //var token = localStorage.getItem("token");
     const urlParams = new URLSearchParams(window.location.search);
@@ -264,7 +289,9 @@ function verify_user_type(){
         }
     }
 }
-
+/**
+ * function called in verify_user_type to create a standard page (non admin user)
+ */
 function create_standard_page(){
     var table = document.getElementById("table_main");
     var  tr1 = document.createElement("tr");    //creazione bottone check-in online
@@ -368,7 +395,9 @@ function create_standard_page(){
     table.appendChild(tr5);
 }
 
-//controllo errori pagina login
+/**
+ * function to show error messages in the login page
+ */
 function checkerrors(){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
