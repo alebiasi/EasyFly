@@ -76,13 +76,13 @@ function load_requests(){
                     accept_request.type="button";
                     accept_request.textContent="Accept";
                     accept_request.className="button_main";
-                    accept_request.onclick=()=>update_request(element._id,1);
+                    accept_request.onclick=()=>update_request(element._id,1, element.user_id,element.booking_code);
                     
                     var deny_request =document.createElement("button");
                     deny_request.type="button";
                     deny_request.textContent="Decline";
                     deny_request.className="button_main";
-                    deny_request.onclick=()=>update_request(element._id,2);
+                    deny_request.onclick=()=>update_request(element._id,2,element.user_id,element.booking_code);
                     
                     td_buttons.appendChild(accept_request);
                     td_buttons.appendChild(deny_request);
@@ -106,21 +106,31 @@ function load_requests(){
     })
     .catch(error => console.log(error));
 };
-function update_request(id,value){  //update the status of a specific request when the user click the accept or decline button
+function update_request(id,value,user_id,flight_code){  //update the status of a specific request when the user click the accept or decline button
     const data = {status:value,token:window.localStorage.getItem("token")};
     fetch("/api/v1/requests/"+id,{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
     .then(()=>{
         if(value==1){
             var doc = new jsPDF();
-            doc.text(10,10,"Test pdf creation");
-            doc.save(); //cration and save of pdf
+            doc.text(20,20,"Carta d'imbarco");
+            fetch("/api/v1/users/"+user_id).then((resp)=>resp.json()).then(function(data){
+                doc.text(20,40,"Name: "+data.name);
+                doc.text(20,60,"Surname: "+data.surname);
+                doc.text(20,80,"Email: "+data.email);
+                doc.text(20,100,"Flight: "+flight_code);
+                doc.save(); //cration and save of pdf
+                //doc.name="test";
+                var blobPDF =  new Blob([ doc.output() ], { type : 'application/pdf'});
+                var fd = new FormData();
+                fd.append("uid",user_id);
+                fd.append("document_type","2");
+                fd.append("filetoupload",blobPDF,"boarding_card_"+user_id+".pdf");
+                fetch("api/v1/save_documents",{method:"POST",body:fd});
+            });
             
-            var fd = new FormData();
-            fd.append("files",doc);
-            fetch("api/v1/save_documents",{method:"POST",body:fd})
         }
-    }) //todo verify if this works
-    /*.then(location.reload());*/
+    })
+    .then(location.reload());
     
 };
 
