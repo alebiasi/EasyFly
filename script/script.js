@@ -350,6 +350,24 @@ function create_standard_page(){
     td_airport_map.appendChild(form_airport_map);
     tr5.appendChild(td_airport_map);
     table.appendChild(tr5);
+
+    var  tr6 = document.createElement("tr");    //creazione info volo
+    var td_info_volo = document.createElement("td");
+
+    var form_info_volo =document.createElement("form");
+    form_info_volo.method="POST";
+    form_info_volo.action="/info_volo";
+    form_info_volo.className="form";
+
+    var btn_info_volo = document.createElement("input");
+    btn_info_volo.type="submit";
+    btn_info_volo.className="button_main";
+    btn_info_volo.value="Informazioni sul tuo volo";
+
+    form_info_volo.appendChild(btn_info_volo);
+    td_info_volo.appendChild(form_info_volo);
+    tr6.appendChild(td_info_volo);
+    table.appendChild(tr6);
 }
 
 //controllo errori pagina login

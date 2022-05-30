@@ -13,6 +13,7 @@ const auth = require("./authentication.js");
 var util = require("util");
 const disconnect = require('./disconnect.js');
 const delete_documents = require("./delete_documents.js");
+const info_volo = require("./flight_info.js");
 
 /**
  * configure parsing middleware
@@ -87,6 +88,11 @@ app.use("/flights_controller",function(req,res){
 
 app.use("/report_delay",function(req,res){
     var mypath = path.join(__dirname,"../html_notifications/report_delay.html");
+});
+
+//info volo
+app.use("/info_volo",function(req,res){
+    var mypath = path.join(__dirname,"../html_info_volo/info_volo.html");
     res.sendFile(mypath);
 });
 
@@ -100,6 +106,8 @@ app.use("/api/v1/save_documents", save_documents);
 app.use("/api/v1/disconnect", disconnect);
 app.use("/api/v1/delete_documents", delete_documents);
 app.use("/api/v2/flights",flights);
+app.use("/api/v1/flightInfo",info_volo);
+
 app.use((req, res) => {
     res.status(404);
     res.json({ error: '404: Not found' });
