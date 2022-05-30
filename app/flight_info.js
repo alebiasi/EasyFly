@@ -14,33 +14,58 @@ router.get('/:id', async (req, res) => {
     }
     else{
         //recupero le informazioni del volo specifico
-        /*let info1 = await Flight.findOne({ cod: imbarco.flight_code}).exec();
-        let info2 = await infoFlight.findOne({ flight_code: imbarco.flight_code}).exec();
-        res.status(200).json({
-            id: req.params.id,
-            self: '/api/v1/flightInfo/',
-            cod: info1.cod,
-            hour: info1.hour,
-            company: info1.company,
-            delay: info1.delay,
-            gate: info1.gate,
-            date: imbarco.date,
-            time: imbarco.time,
-            seat: imbarco.seat,
-            entrance: imbarco.entrance,
-            gate_close_time: imbarco.gate_close_time,
-            landing_time: imbarco.landing_time,
-            speed: info2.speed,
-            distance: info2.distance,
-            model: info2.model,
-            type: info2.type,
-            estimate_arrive: info2.estimate_arrive,
-            start_location: info2.start_location,
-            arrive_location: info2.arrive_location
-        });*/
-        res.status(200).json({
+        let info1 = await Flight.findOne({ cod: imbarco.flight_code}).exec();
+        if(info1==null){
+            res.status(400).json({error1: "non risultatono esserci voli associati alla carta d'imbarco"});
+        }
+        else{
+            let info2 = await infoFlight.findOne({ flight_code: imbarco.flight_code}).exec();
+            if(info2==null){
+                res.status(200).json({
+                    error2: "non ci sono dati di aggiornamento sul volo",
+                    id: req.params.id,
+                    self: '/api/v1/flightInfo/',
+                    cod: info1.cod,
+                    hour: info1.hour,
+                    company: info1.company,
+                    delay: info1.delay,
+                    gate: info1.gate,
+                    date: imbarco.date,
+                    time: imbarco.time,
+                    seat: imbarco.seat,
+                    entrance: imbarco.entrance,
+                    gate_close_time: imbarco.gate_close_time,
+                    landing_time: imbarco.landing_time,
+                });
+            }
+            else{
+                res.status(200).json({
+                    id: req.params.id,
+                    self: '/api/v1/flightInfo/',
+                    cod: info1.cod,
+                    hour: info1.hour,
+                    company: info1.company,
+                    delay: info1.delay,
+                    gate: info1.gate,
+                    date: imbarco.date,
+                    time: imbarco.time,
+                    seat: imbarco.seat,
+                    entrance: imbarco.entrance,
+                    gate_close_time: imbarco.gate_close_time,
+                    landing_time: imbarco.landing_time,
+                    speed: info2.speed,
+                    distance: info2.distance,
+                    model: info2.model,
+                    type: info2.type,
+                    estimate_arrive: info2.estimate_arrive,
+                    start_location: info2.start_location,
+                    arrive_location: info2.arrive_location
+                });
+            }
+        }
+        /*res.status(200).json({
             id: req.params.id
-        });
+        });*/
     }
 });
 
