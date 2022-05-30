@@ -50,9 +50,12 @@ function loadDocuments(userId) {
 
     const idImg = document.getElementById('id_img'); // Get the img where place the id image
     const passportImg = document.getElementById('passport_img'); // Get the img where place the passport image
+    const boardingImg1 = document.getElementById("boarding_img_1");
+    //const boardingImg2 = document.getElementById("boarding_img_2");
 
     idImg.src = './imgs/none.png';
     passportImg.src = './imgs/none.png';
+    //boardingImg.src = "./imgs/none.png";
     
     fetch('../api/v1/documents/' + userId)
     .then((resp) => resp.json()) // Transform the data into json
@@ -64,8 +67,12 @@ function loadDocuments(userId) {
             
             if (document.type == 0) {
                 idImg.src = document.image_url;
-            } else {
+            } else if(document.type==1){
                 passportImg.src = document.image_url;
+            }else{
+                boardingImg1.src = document.image_url;
+                console.log(document.image_url);
+                //boardingImg2.src=document.image_url;
             }
 
         })

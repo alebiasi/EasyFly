@@ -76,11 +76,10 @@ function UpdateDocument(user_id, document_type, newUrl) {
 }
 
 router.post('/', async (req, res) => {
-        var form = new formidable.IncomingForm();
+    var form = new formidable.IncomingForm();
 
-        form.parse(req, function (err, fields, files) {
-        var oldpath = files.filetoupload.filepath;
-
+    form.parse(req, function (err, fields, files) {
+        var oldpath = files.filetoupload.filepath
         let id = makeid(16);
         let src = files.filetoupload.originalFilename;
         let newpath = './static/documents/' + id + src.substring(src.lastIndexOf('.'));

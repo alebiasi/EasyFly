@@ -13,7 +13,7 @@ router.use(express.urlencoded());
  */
 router.post("",async function(req,res){ 
     var datetime = new Date();  //get current date
-    var token=req.body.token || window.localStorage.getItem("token");
+    var token=req.body.token ;
     var base64Url = token.split('.')[1];
 	var base64 = base64Url.replace('-', '+').replace('_', '/');
 	var parsedtoken=JSON.parse(atob(base64));
@@ -55,7 +55,7 @@ router.get("/pending",async function(req,res){
     res.status(200).json(rispostajson); //send object
 });
 /**
- * get a specific request
+ * get a specific user
  */
 router.get("/:id",async function(req,res){
     var id = req.params.id;

@@ -4,6 +4,7 @@ const router = express.Router();
 //recupero il modello user per ottenere la mia collezione su mongodb
 const User = require('./models/user');
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const mongoose = require("mongoose");
 
 //route di login
 router.post('/login', async function(req,res){
@@ -124,6 +125,21 @@ router.post('/registration/admin', async function(req,res){
     let userId = newUser.id;
     res.location("/api/v1/authentication/front" + userId).status(201).send();
 
+});
+
+router.get("/users/:id",async function(req,res){
+    var id = req.params.id;
+    try{    //if the given id is not on the correct format mongoose throws an error
+        var mongoid = new mongoose.mongo.ObjectId(id);    //get mongoose id format
+        var user= await User.findById(mongoid); //find user on db   
+        if(user==null){    //if the request does not exists, send error 404 
+            res.status(404).send("Error id "+id+" not found");
+        }else{//else send the json back
+            res.status(200).json(user);
+        }
+    }catch(error){
+        res.status(404).send("Error id "+id+" not found");
+    }
 });
 
 // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
