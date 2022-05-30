@@ -125,17 +125,18 @@ function update_request(id,value,user_id,flight_code){  //update the status of a
         if(value==1){   //if the check-in request is accepted create the boarding card and send it to back-end
             fetch("/api/v1/authentication/users/"+user_id).then((resp)=>resp.json()).then(function(data){
 
-                var doc = new jsPDF();
+                var doc = new jsPDF({orientation:"l"});
                 doc.text(20,20,"Boarding Card");
                 doc.text(20,40,"Name: "+data.name); //creation of a basic boarding card
-                doc.text(20,60,"Surname: "+data.surname);
-                doc.text(20,80,"Email: "+data.email);
-                doc.text(20,100,"Flight: "+flight_code);
-                doc.text(20,120,"");
+                doc.text(150,40,"Surname: "+data.surname);
+                doc.text(20,60,"Email: "+data.email);
+                doc.text(150,60,"Flight: "+flight_code);
+                doc.text(20,80,"");
 
                 var blobPDF =  new Blob([ doc.output() ], { type : 'application/pdf'}); //convert pdf to blob to send it correctly to backend
                 var fd = new FormData();
                 fd.append("uid",user_id);   //append information for the backend
+                fd.append("email",data.email);
                 fd.append("document_type","2");
                 fd.append("filetoupload",blobPDF,"boarding_card_"+user_id+".pdf");  //append file
 
