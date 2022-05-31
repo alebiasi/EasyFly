@@ -135,7 +135,12 @@ router.get("/users/:id",async function(req,res){
         if(user==null){    //if the request does not exists, send error 404 
             res.status(404).send("Error id "+id+" not found");
         }else{//else send the json back
-            res.status(200).json(user);
+            var myjson ={
+                name:user.name,
+                surname:user.surname,
+                email:user.email
+            };
+            res.status(200).json(myjson);
         }
     }catch(error){
         res.status(404).send("Error id "+id+" not found");
