@@ -91,7 +91,7 @@ router.post('/', async (req, res) => {
                 from: 'easyfly.ids2@gmail.com',
                 to: fields.email, 
                 subject: 'Esito richiesta check-in online',
-                html: "<p>Il team di EasyFly è lieta di informarla che la sua richiesta di check-in online è andata a buon fine ed è stata accettata.</p><p>Le auguriamo una buona giornata ed un buon volo</p><p>Il team di EasyFly</p>"
+                html: "<p>Il team di EasyFly è lieto di informarla che la sua richiesta di check-in online è andata a buon fine ed è stata accettata.</p><p>Le auguriamo una buona giornata ed un buon volo</p><p>Il team di EasyFly</p>"
             };
             transporter.sendMail(mailOptions, function(error, info){    //send email
                 if (error) {

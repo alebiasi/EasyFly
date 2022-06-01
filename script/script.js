@@ -32,7 +32,7 @@ function load_requests(){
             td_time_index.className="td_auth";
 
             var td_buttons_index=document.createElement("td");
-            td_buttons_index.textContent="Buttons";
+            td_buttons_index.textContent="Buttons *";
             td_buttons_index.className="td_auth";
 
             tr_index.appendChild(td_requester_id_index);
@@ -45,6 +45,10 @@ function load_requests(){
             table.appendChild(tr_index);
 
             body.appendChild(table);
+
+            var h6 = document.createElement("h6");
+            h6.textContent="* assicurarsi che tutti i campi siano corretti prima di premere il pulsante Accept";
+            body.appendChild(h6);
 
             data["requests"].forEach(element => {
                 if(Object.keys(element).length!==0){
@@ -124,24 +128,37 @@ function update_request(id,value,user_id,flight_code){  //update the status of a
     .then(()=>{
         if(value==1){   //if the check-in request is accepted create the boarding card and send it to back-end
             fetch("/api/v1/authentication/users/"+user_id).then((resp)=>resp.json()).then(function(data){
+                fetch("/api/v1/flights/flight_code/"+flight_code,{method:"GET"}).then((resp2)=>resp2.json()).then(function(data2){
+                    var doc = new jsPDF({orientation:"l"});
+                    doc.text(20,20,"Boarding Card");
+                    doc.text(20,40,"Name: "+data.name); //creation of a basic boarding card
+                    doc.text(150,40,"Surname: "+data.surname);
+                    doc.text(20,60,"Email: "+data.email);
+                    doc.text(20,80,"Flight: "+flight_code);
+                    doc.text(150,80,"Company: "+data2.company);
+                    doc.text(20,100,"Gate: "+data2.gate);
+                    doc.text(20,120,"");
 
-                var doc = new jsPDF({orientation:"l"});
-                doc.text(20,20,"Boarding Card");
-                doc.text(20,40,"Name: "+data.name); //creation of a basic boarding card
-                doc.text(150,40,"Surname: "+data.surname);
-                doc.text(20,60,"Email: "+data.email);
-                doc.text(150,60,"Flight: "+flight_code);
-                doc.text(20,80,"");
+                    var blobPDF =  new Blob([ doc.output() ], { type : 'application/pdf'}); //convert pdf to blob to send it correctly to backend
+                    var fd = new FormData();
+                    fd.append("uid",user_id);   //append information for the backend
+                    fd.append("email",data.email);
+                    fd.append("document_type","2");
+                    fd.append("filetoupload",blobPDF,"boarding_card_"+user_id+".pdf");  //append file
 
-                var blobPDF =  new Blob([ doc.output() ], { type : 'application/pdf'}); //convert pdf to blob to send it correctly to backend
-                var fd = new FormData();
-                fd.append("uid",user_id);   //append information for the backend
-                fd.append("email",data.email);
-                fd.append("document_type","2");
-                fd.append("filetoupload",blobPDF,"boarding_card_"+user_id+".pdf");  //append file
-
-                fetch("api/v1/save_documents",{method:"POST",body:fd}) //send file
-                .then(location.reload());
+                    info_flight={
+                        token:window.localStorage.getItem("token"),
+                        uid:user_id,
+                        name:data.name,
+                        surname:data.surname,
+                        flight_code:flight_code,
+                        time:data2.hour,
+                    };
+                    fetch("/api/v1/save_documents",{method:"POST",body:fd}) //send file
+                    .then(fetch("/api/v1/boarding_cards",{method:"POST",headers: {'Content-Type': 'application/json',},body:JSON.stringify(info_flight)}))
+                    .then(location.reload());
+                });
+                
             });
             
         }

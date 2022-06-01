@@ -39,6 +39,21 @@ router.get('/:id', async (req, res) => {
     });
 });
 
+/**
+ * search by flight code instead of id
+ */
+router.get("/flight_code/:code", async (req,res)=>{
+    let flight = await Flight.findOne({cod:req.params.code});
+    res.status(200).json({
+        self: '/api/v1/flights/' + flight.id,
+        cod: flight.cod,
+        hour: flight.hour,
+        company: flight.company,
+        delay: flight.delay,
+        gate: flight.gate
+    });
+});
+
 router.delete('/:id', async (req, res) => {
     let flight = await Flight.findById(req.params.id).exec();
     if (!flight) {

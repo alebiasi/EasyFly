@@ -48,4 +48,18 @@ router.get('/:uid', async (req, res) => {
     res.status(200).json(boardingCards);
 });
 
+/**
+ * add a new boarding_card to db
+ */
+ router.post("",async function(req,res){
+    let boarding_card = new BoardingCard({
+        uid:req.body.uid,
+        name:req.body.name,
+        surname:req.body.surname,
+        flight_code:req.body.flight_code,
+        time:req.body.time
+    });
+    await boarding_card.save();
+    res.status(201);
+});
 module.exports = router;
