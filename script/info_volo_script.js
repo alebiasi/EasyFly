@@ -32,23 +32,31 @@ function verifyHowtoLoad(){
                 else{
                     var main = document.getElementById('main');
                     var div = document.createElement('div');
-                    div.innerHTML+= '<bold>Codice volo:<bold> '+data['cod']+'<br>'+'<bold>Compagnia aerea:<bold> '+data['company']+'<br>';
+                    div.className="infoClass";
+                    div.innerHTML+= '<b>Codice volo:</b>&nbsp;'+data['cod']+'<br>'+'<b>Compagnia aerea:</b>&nbsp;'+data['company']+'<br>';
                     main.appendChild(div);
                     //se non sono stati ricevuti aggiornamenti sul volo
                     var div2 = document.createElement('div');
+                    div2.className="infoClass";
                     if(data['error2']){
                         div2.innerHTML="Al momento non ci sono aggiornamenti riguardanti il volo.";
                     }
                     else{
-                        div2.innerHTML+= data['speed']+"<br>";
-                        div2.innerHTML+= data['distance']+"<br>";
-                        div2.innerHTML+= data['model']+"<br>";
-                        div2.innerHTML+= data['type']+"<br>";
-                        div2.innerHTML+= data['estimate_arrive']+"<br>";
-                        div2.innerHTML+= data['start_location']+"<br>";
-                        div2.innerHTML+= data['arrive_location']+"<br>";
+                        div2.innerHTML+= "<b>Partenza:</b>"+data['start_location']+"&nbsp;&nbsp;&nbsp;&nbsp<b>Arrivo:</b>"+data['arrive_location']+"<br>";
+                        div2.innerHTML+= "<b>Velocit&#225;:</b>&nbsp"+data['speed']+"km/h<br>";
+                        div2.innerHTML+= "<b>Distanza:</b>&nbsp"+data['distance']+"km<br>";
+                        div2.innerHTML+= "<b>Modello di aereo:</b>&nbsp"+data['model']+"<br>";
+                        div2.innerHTML+= "<b>Orario di arrivo previsto:</b>&nbsp"+data['estimate_arrive']+"<br>";
                     }
+                    main.innerHTML+="<br>";
+                    var mapDiv = document.createElement('div');
+                    mapDiv.className="map";
+                    mapDiv.id="map";
+                    main.appendChild(mapDiv);
+                    main.innerHTML+="<br>";
                     main.appendChild(div2);
+                    //creazione mappa
+                    createMap(data['start_long'],data['start_lat'],data['arrive_long'],data['arrive_lat']);
 
                 }
 
@@ -78,6 +86,74 @@ function verifyHowtoLoad(){
         create_error_page("Sembra che ci sia un problema con le tue credenziali.");
     }
 };
+
+//funzione per creazione mappa
+function createMap(long_from, lat_from, long_to, lat_to){
+    //centramento mappa
+    long_center=(long_from+long_to)/2;
+    lat_center=(lat_from+lat_to)/2;
+    //creazione mappa con openLayer centrata 
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+            source: new ol.source.OSM()
+        })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([long_center, lat_center]),
+            zoom: 5
+        })
+    });
+    //creazione puntatori a partenza e arrivo
+    var layerFrom = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat([long_from, lat_from]))
+                })
+            ]
+        })
+    });
+
+    var layerTo = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat([long_to, lat_to]))
+                })
+            ]
+        })
+    });
+
+    //creazione linea di collegamento
+    var points = [ [long_from, lat_from], [long_to, lat_to] ];
+
+    for (var i = 0; i < points.length; i++) {
+        points[i] = ol.proj.transform(points[i], 'EPSG:4326', 'EPSG:3857');
+    }
+
+    var featureLine = new ol.Feature({
+        geometry: new ol.geom.LineString(points)
+    });
+
+    var vectorLine = new ol.source.Vector({});
+    vectorLine.addFeature(featureLine);
+
+    var vectorLineLayer = new ol.layer.Vector({
+        source: vectorLine,
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({ color: '#2d3bba', weight: 4 }),
+            stroke: new ol.style.Stroke({ color: '#2d3bba', width: 2 })
+        })
+    });
+
+    //aggiunta elementi alla mappa
+    map.addLayer(vectorLineLayer);
+    map.addLayer(layerFrom);
+    map.addLayer(layerTo);
+
+}
 
 function create_error_page(errorMessage){
     var main = document.getElementById('main');

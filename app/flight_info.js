@@ -56,10 +56,13 @@ router.get('/:id', async (req, res) => {
                     speed: info2.speed,
                     distance: info2.distance,
                     model: info2.model,
-                    type: info2.type,
                     estimate_arrive: info2.estimate_arrive,
                     start_location: info2.start_location,
-                    arrive_location: info2.arrive_location
+                    arrive_location: info2.arrive_location,
+                    start_long: info2.start_long,
+                    start_lat: info2.start_lat,
+                    arrive_long: info2.arrive_long,
+                    arrive_lat: info2.arrive_lat
                 });
             }
         }
@@ -68,5 +71,26 @@ router.get('/:id', async (req, res) => {
         });*/
     }
 });
+
+//per creare al volo dei dati di test
+/*router.post('', async (req, res) => {
+	let newUser = new infoFlight({
+        flight_code: "1",
+        speed: 120,
+        distance: 200,
+        model: "a123",
+        estimate_arrive: "22:00",
+        start_location: "Roma",
+        arrive_location: "Trento",
+        start_long: 12.4963655,
+        start_lat: 41.9027835,
+        arrive_long: 11.12108,
+        arrive_lat: 46.06787,
+    });
+    newUser = await newUser.save();
+    res.status(201);
+
+});
+*/
 
 module.exports = router;

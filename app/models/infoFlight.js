@@ -7,8 +7,11 @@ module.exports = mongoose.model('infoFlight', new Schema({
     speed: Number,
     distance: Number,
     model: String,
-    type: String,
-    estimate_arrive: Date,
+    estimate_arrive: String,
     start_location: String,
-    arrive_location: String
+    arrive_location: String,
+    start_long: Number,
+    start_lat: Number,
+    arrive_long: Number,
+    arrive_lat: Number,
 }));

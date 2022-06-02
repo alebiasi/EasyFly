@@ -96,6 +96,12 @@ app.use("/info_volo",function(req,res){
     res.sendFile(mypath);
 });
 
+//per test
+/*app.use("/info_voloCrea",function(req,res){
+    var mypath = path.join(__dirname,"../static/creaInfo.html");
+    res.sendFile(mypath);
+});*/
+
 app.use("/api/v1/requests",checkin);
 app.use("/api/v2/requests",checkin);
 app.use("/api/v1/flights", flights);

@@ -13,3 +13,17 @@
 .mainClass {
     margin: 20%;
 }
+
+.infoClass {
+    border: solid;
+    border-width: 1px;
+    border-color: darkgray;
+    border-radius: 30px;
+    font-size: 130%;
+    padding: 3%;
+}
+
+.map {
+    height: 400px;
+    width: 100%;
+  }
