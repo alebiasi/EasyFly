@@ -32,11 +32,13 @@ function verifyHowtoLoad(){
                 else{
                     var main = document.getElementById('main');
                     var div = document.createElement('div');
+                    div.id='div1';
                     div.className="infoClass";
                     div.innerHTML+= '<b>Codice volo:</b>&nbsp;'+data['cod']+'<br>'+'<b>Compagnia aerea:</b>&nbsp;'+data['company']+'<br>';
                     main.appendChild(div);
                     //se non sono stati ricevuti aggiornamenti sul volo
                     var div2 = document.createElement('div');
+                    div2.id='div2';
                     div2.className="infoClass";
                     if(data['error2']){
                         div2.innerHTML="Al momento non ci sono aggiornamenti riguardanti il volo.";
@@ -59,27 +61,7 @@ function verifyHowtoLoad(){
                     createMap(data['start_long'],data['start_lat'],data['arrive_long'],data['arrive_lat']);
 
                 }
-
-                /*delay: info1.delay,
-                gate: info1.gate,
-                date: imbarco.date,
-                time: imbarco.time,
-                seat: imbarco.seat,
-                entrance: imbarco.entrance,
-                gate_close_time: imbarco.gate_close_time,
-                landing_time: imbarco.landing_time,*/
             }
-                /*tableDocuments.innerHTML += `<tr><td>Nome</td><td>${boardingCard.name}</td></tr>`;
-                tableDocuments.innerHTML += `<tr><td>Cognome</td><td>${boardingCard.surname}</td></tr>`;
-                tableDocuments.innerHTML += `<tr><td>Codice volo</td><td>${boardingCard.flight_code}</td></tr>`;
-                tableDocuments.innerHTML += `<tr><td>Data</td><td>${boardingCard.date}</td></tr>`;
-                tableDocuments.innerHTML += `<tr><td>Ora</td><td>${boardingCard.time}</td></tr>`;
-                tableDocuments.innerHTML += `<tr><td>Posto</td><td>${boardingCard.seat}</td></tr>`;
-                tableDocuments.innerHTML += `<tr><td>Entrata</td><td>${boardingCard.entrance}</td></tr>`;
-                tableDocuments.innerHTML += `<tr><td>Chiusura gate</td><td>${boardingCard.gate_close_time}</td></tr>`;
-                tableDocuments.innerHTML += `<tr><td>Ora atterraggio</td><td>${boardingCard.landing_time}</td></tr>`;*/
-    
-            //})
         })
         .catch( error => console.error(error) );// If there is any error you will catch them here*/
     } else {
@@ -154,6 +136,43 @@ function createMap(long_from, lat_from, long_to, lat_to){
     map.addLayer(layerTo);
 
 }
+
+function ajaxUpdate() {
+    var token = localStorage.getItem("token")
+    var id_utente= parseJwt(token)["id"];
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        const data = JSON.parse(this.responseText);
+
+        var main = document.getElementById('main');
+        var div = document.getElementById('div1');
+        div.innerHTML="";
+        div.innerHTML+= '<b>Codice volo:</b>&nbsp;'+data['cod']+'<br>'+'<b>Compagnia aerea:</b>&nbsp;'+data['company']+'<br>';
+        //se non sono stati ricevuti aggiornamenti sul volo
+        var div2 = document.getElementById('div2');
+        div2.innerHTML="";
+        if(data['error2']){
+            div2.innerHTML="Al momento non ci sono aggiornamenti riguardanti il volo.";
+        }
+        else{
+            div2.innerHTML+= "<b>Partenza:</b>"+data['start_location']+"&nbsp;&nbsp;&nbsp;&nbsp<b>Arrivo:</b>"+data['arrive_location']+"<br>";
+            div2.innerHTML+= "<b>Velocit&#225;:</b>&nbsp"+data['speed']+"km/h<br>";
+            div2.innerHTML+= "<b>Distanza:</b>&nbsp"+data['distance']+"km<br>";
+            div2.innerHTML+= "<b>Modello di aereo:</b>&nbsp"+data['model']+"<br>";
+            div2.innerHTML+= "<b>Orario di arrivo previsto:</b>&nbsp"+data['estimate_arrive']+"<br>";
+        }
+        var mapDiv = document.getElementById('map');
+        mapDiv.innerHTML="";
+        //creazione mappa
+        createMap(data['start_long'],data['start_lat'],data['arrive_long'],data['arrive_lat']);
+
+    }
+    xhttp.open("GET", '../api/v1/flightInfo/'+id_utente, true);
+    xhttp.getResponseHeader("Content-type", "application/json");
+    xhttp.send();
+  }
+
 
 function create_error_page(errorMessage){
     var main = document.getElementById('main');
