@@ -44,7 +44,7 @@ function verifyHowtoLoad(){
                         div2.innerHTML="Al momento non ci sono aggiornamenti riguardanti il volo.";
                     }
                     else{
-                        div2.innerHTML+= "<b>Partenza:</b>"+data['start_location']+"&nbsp;&nbsp;&nbsp;&nbsp<b>Arrivo:</b>"+data['arrive_location']+"<br>";
+                        div2.innerHTML+= "<b>Partenza:</b>&nbsp;"+data['start_location']+"&nbsp;&nbsp;&nbsp;&nbsp<b>Arrivo:</b>"+data['arrive_location']+"<br>";
                         div2.innerHTML+= "<b>Velocit&#225;:</b>&nbsp"+data['speed']+"km/h<br>";
                         div2.innerHTML+= "<b>Distanza:</b>&nbsp"+data['distance']+"km<br>";
                         div2.innerHTML+= "<b>Modello di aereo:</b>&nbsp"+data['model']+"<br>";
@@ -156,7 +156,7 @@ function ajaxUpdate() {
             div2.innerHTML="Al momento non ci sono aggiornamenti riguardanti il volo.";
         }
         else{
-            div2.innerHTML+= "<b>Partenza:</b>"+data['start_location']+"&nbsp;&nbsp;&nbsp;&nbsp<b>Arrivo:</b>"+data['arrive_location']+"<br>";
+            div2.innerHTML+= "<b>Partenza:</b>&nbsp;"+data['start_location']+"&nbsp;&nbsp;&nbsp;&nbsp<b>Arrivo:</b>"+data['arrive_location']+"<br>";
             div2.innerHTML+= "<b>Velocit&#225;:</b>&nbsp"+data['speed']+"km/h<br>";
             div2.innerHTML+= "<b>Distanza:</b>&nbsp"+data['distance']+"km<br>";
             div2.innerHTML+= "<b>Modello di aereo:</b>&nbsp"+data['model']+"<br>";
