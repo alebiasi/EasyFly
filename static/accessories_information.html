@@ -1,0 +1,89 @@
+<!-- TODO: Cambiare il nome in tabellone_orari.html-->
+<html>  
+    <head>
+        <meta charset='utf-8'>
+        <title>EasyFly</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='../style/style.css'> 
+        <link rel="stylesheet" type="text/css" media="screen" href="../style/accInfoStyle.css">
+    </head>
+    <body>
+        <div class="upBorder">
+            <table class="upTable">
+                <tr>
+                    <td class="leftArrow">
+                        <img src="imgs/Left arrow.png" onclick="window.location.replace('main_page')"/>
+                    </td>
+                    <td class="serviceName">
+                        <b>Informazioni accessorie</b>
+                    </td>
+                    <td class="verticalDots">
+                        <img src="imgs/Vertical dots.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="container">
+            <form action="api/v1/acc_information" onsubmit="giveUid();" method="post">
+                <legend><b>Patologie di cui sei affetto</b></legend>
+                <div id="checkboxPathology" class="checks">
+                    <input type="hidden" name="uid" id="uid_0" value="">
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="artrite" value="artrite">Artrite<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="asma" value="asma">Asma<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="artrosi" value="artrosi">Atrosi<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="diabete" value="diabete">Diabete<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="distrofia" value="distrofia">Distrofia muscolare<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="epilessia" value="epilessia">Epilessia<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="insufficienza" value="insufficienza">Insufficienza cardiaca<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="ipertensione" value="ipertensione">Ipertensione<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="ipotiroidismo" value="ipotiroidismo">Ipotiroidismo<br>
+                    </div>
+                    <div class="checkboxStyle">
+                        <input type="checkbox" name="pathology" id="parkinson" value="parkinson">Morbo di Parkinson<br>
+                    </div>
+                </div>
+
+                <legend><b>Allergie di cui sei affetto</b></legend>
+                <div id="allergiesDiv" class="inputText">
+                    <textarea name="allergies" id="allergies" maxlength="200" value=""></textarea>
+                </div>
+
+                <legend><b>Vaccini covid</b></legend>
+                <div id="vaccineDiv" class="vaccineText">
+                    <input type="number" class="vaccineInput" name="vaccine" id="vaccine" min="0" max="5" value="0">
+                </div>
+
+                <legend><b>Informazioni aggiuntive che ci vuoi fornire?</b></legend>
+                <div id="moreInfoDiv" class="inputText">
+                    <textarea name="moreInfo" id="moreInfo" maxlength="250" value=""></textarea>
+                </div>
+
+                <br>
+
+               <input type="submit" class="buttonClass" name="submit_button" id="submitPathology" value="Salva modifiche">
+            </form>
+            <button class="buttonClass" onclick="deleteAllSelection();">Reset</button>
+        </div>
+    </body>
+</html>
+
+<!-- script in bottom of the file otherwise cannot find checkbox id -->
+<script src="/acc_info_script.js"></script>
