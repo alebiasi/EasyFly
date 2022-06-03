@@ -14,6 +14,7 @@ var util = require("util");
 const disconnect = require('./disconnect.js');
 const delete_documents = require("./delete_documents.js");
 const info_volo = require("./flight_info.js");
+const acc_information = require("./acc_information.js");
 
 /**
  * configure parsing middleware
@@ -113,6 +114,7 @@ app.use("/api/v1/disconnect", disconnect);
 app.use("/api/v1/delete_documents", delete_documents);
 app.use("/api/v2/flights",flights);
 app.use("/api/v1/flightInfo",info_volo);
+app.use("/api/v1/acc_information", acc_information);
 
 app.use((req, res) => {
     res.status(404);
