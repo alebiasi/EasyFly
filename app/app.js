@@ -97,6 +97,12 @@ app.use("/info_volo",function(req,res){
     res.sendFile(mypath);
 });
 
+//info accessorie
+app.use("/optional_info",function(req,res){
+    var mypath = path.join(__dirname,"../static/accessories_information.html");
+    res.sendFile(mypath);
+});
+
 //per test
 /*app.use("/info_voloCrea",function(req,res){
     var mypath = path.join(__dirname,"../static/creaInfo.html");
