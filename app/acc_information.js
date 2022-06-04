@@ -29,7 +29,10 @@ async function updateData(user_uid, user_pathology, user_allergies, user_vaccine
         {uid: user_uid},
         {uid: user_uid, pathology: user_pathology, allergies: user_allergies, covid_vaccines: user_vaccine, more_info: user_more_info},
         function(err, docs) {
-            if(err) result_operation = 400;
+            if(err) {
+                result_operation = 400;
+                console.log(err);
+            }
             else result_operation = 200;
         }
     )
@@ -65,8 +68,14 @@ router.post('/', async function(req, res) {
 
 // get informaion from db
 router.get('/:uid', async (req, res) => {
+    let result_operation = 200;
     // https://mongoosejs.com/docs/api.html#model_Model.find
-    let optInformation = await OptInformation.find({uid: req.params.uid});
+    let optInformation = await OptInformation.find({uid: req.params.uid}, function(err, doc) {
+        if(err) {
+            result_operation = 400;
+            console.log(err);
+        }
+    });
     optInformation = optInformation.map( (optInformation) => {
         return {
             self: '/api/v1/acc_information/' + optInformation.id,
@@ -77,7 +86,7 @@ router.get('/:uid', async (req, res) => {
             more_info: optInformation.more_info
         };
     });
-    return res.status(200).json(optInformation);
+    return res.status(result_operation).json(optInformation);
 });
 
 module.exports = router;
