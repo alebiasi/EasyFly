@@ -4,7 +4,8 @@ var mongoose = require("mongoose");
 const OptInformation = require("./models/optional_information")
 const router = express.Router();
 
-function saveData(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info) {
+async function saveData(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info) {
+    let result_operation;
     const optInformation = new OptInformation({
         uid: user_uid,
         pathology: user_pathology,
@@ -13,31 +14,37 @@ function saveData(user_uid, user_pathology, user_allergies, user_vaccine, user_m
         more_info: user_more_info
     });
 
-    optInformation.save()
-    .then( () => console.log('Saved succesfully') )
-    .catch( err => console.log(err) );
+    await optInformation.save()
+    .then( () => result_operation = 200 )
+    .catch( err => {
+        console.log(err);
+        result_operation = 400;
+    });
+    return result_operation;
 }
 
-function updateData(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info) {
-    OptInformation.replaceOne(
+async function updateData(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info) {
+    let result_operation;
+    await OptInformation.updateOne(
         {uid: user_uid},
-        {uid: user_uid, pathology: user_pathology, allergies: user_allergies, covid_vaccine: user_vaccine, more_info: user_more_info},
+        {uid: user_uid, pathology: user_pathology, allergies: user_allergies, covid_vaccines: user_vaccine, more_info: user_more_info},
         function(err, docs) {
-            if(err) console.log(err);
-            else console.log('Optional information updated');
+            if(err) result_operation = 400;
+            else result_operation = 200;
         }
     )
+    return result_operation;
 }
 
-function saveOrUpdate(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info) {
-    OptInformation.findOne({uid: user_uid}, function(err, docs) {
+async function saveOrUpdate(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info) {
+    await OptInformation.findOne({uid: user_uid}, function(err, docs) {
         if(err) console.log(err);
 
         if(docs != null) {
-            updateData(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info);
+            return updateData(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info);
         }
         else {
-            saveData(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info)
+            return saveData(user_uid, user_pathology, user_allergies, user_vaccine, user_more_info)
         }
     });
 }
@@ -45,16 +52,15 @@ function saveOrUpdate(user_uid, user_pathology, user_allergies, user_vaccine, us
 router.post('/', async function(req, res) {
     // get all value of form
     const uid = req.body.uid;
-    console.log(uid);
     const pathology = req.body.pathology; // checkbox return an array but we store it in one string
     const pathology_concat = pathology != undefined ? pathology.filter(Boolean).join(';'): "";
     const allergies = req.body.allergies;
     const vaccine = req.body.vaccine;
     const more_info = req.body.moreInfo;
 
-    saveOrUpdate(uid, pathology_concat, allergies, vaccine, more_info);
+    const result_operation = await saveOrUpdate(uid, pathology_concat, allergies, vaccine, more_info);
 
-    res.redirect('back');
+    return res.status(result_operation).redirect('back');
 });
 
 // get informaion from db
@@ -71,7 +77,7 @@ router.get('/:uid', async (req, res) => {
             more_info: optInformation.more_info
         };
     });
-    res.status(200).json(optInformation);
+    return res.status(200).json(optInformation);
 });
 
 module.exports = router;
