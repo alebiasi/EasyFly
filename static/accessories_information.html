@@ -26,6 +26,9 @@
 
         <div id="container">
             <form action="api/v1/acc_information" onsubmit="giveUid();" method="post">
+                <div id="error1" hidden="true" class="errorClass">
+                    <h2>Qualcosa è andato storto, ti preghiamo di riprovare più tardi o contattare l'assistenza</h2>
+                </div>
                 <legend><b>Patologie di cui sei affetto</b></legend>
                 <div id="checkboxPathology" class="checks">
                     <input type="hidden" name="uid" id="uid_0" value="">

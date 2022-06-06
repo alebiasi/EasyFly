@@ -62,3 +62,12 @@ textarea {
     color: #ffffff;
     border-radius: 20px;
 }
+
+.errorClass {
+    text-align: center;
+    color: red;
+    border: solid;
+    border-width: 2px;
+    border-radius: 30px 30px 30px;
+    margin-bottom: 40px;
+}
