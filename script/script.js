@@ -126,25 +126,30 @@ function update_request(id,value,user_id,flight_code){  //update the status of a
 
     fetch("/api/v1/requests/"+id,{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
     .then(()=>{
-        if(value==1){   //if the check-in request is accepted create the boarding card and send it to back-end
             fetch("/api/v1/authentication/users/"+user_id).then((resp)=>resp.json()).then(function(data){
                 fetch("/api/v1/flights/flight_code/"+flight_code,{method:"GET"}).then((resp2)=>resp2.json()).then(function(data2){
-                    var doc = new jsPDF({orientation:"l"});
-                    doc.text(20,20,"Boarding Card");
-                    doc.text(20,40,"Name: "+data.name); //creation of a basic boarding card
-                    doc.text(150,40,"Surname: "+data.surname);
-                    doc.text(20,60,"Email: "+data.email);
-                    doc.text(20,80,"Flight: "+flight_code);
-                    doc.text(150,80,"Company: "+data2.company);
-                    doc.text(20,100,"Gate: "+data2.gate);
-                    doc.text(20,120,"");
-
-                    var blobPDF =  new Blob([ doc.output() ], { type : 'application/pdf'}); //convert pdf to blob to send it correctly to backend
                     var fd = new FormData();
+                    if(value==1){   //if the check-in request is accepted create the boarding card and send it to back-end
+                        var doc = new jsPDF({orientation:"l"});
+                        doc.text(20,20,"Boarding Card");
+                        doc.text(20,40,"Name: "+data.name); //creation of a basic boarding card
+                        doc.text(150,40,"Surname: "+data.surname);
+                        doc.text(20,60,"Email: "+data.email);
+                        doc.text(20,80,"Flight: "+flight_code);
+                        doc.text(150,80,"Company: "+data2.company);
+                        doc.text(20,100,"Gate: "+data2.gate);
+                        doc.text(20,120,"");
+                        var blobPDF =  new Blob([ doc.output() ], { type : 'application/pdf'}); //convert pdf to blob to send it correctly to backend
+                        fd.append("filetoupload",blobPDF,"boarding_card_"+user_id+".pdf");  //append file
+                    }
+
+                    
+                    
                     fd.append("uid",user_id);   //append information for the backend
                     fd.append("email",data.email);
                     fd.append("document_type","2");
-                    fd.append("filetoupload",blobPDF,"boarding_card_"+user_id+".pdf");  //append file
+                    fd.append("request_status",value);
+                    
 
                     info_flight={
                         token:window.localStorage.getItem("token"),
@@ -160,9 +165,7 @@ function update_request(id,value,user_id,flight_code){  //update the status of a
                 });
                 
             });
-            
-        }
-    });   
+        });   
 };
 
 /**

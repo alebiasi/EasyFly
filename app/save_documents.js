@@ -80,6 +80,12 @@ router.post('/', async (req, res) => {
 
     form.parse(req, function (err, fields, files) {
         if(fields.document_type==2){    //if document_type == 2 it means that i am inserting the boarding card, so i can notify the user that the check-in procedure went well with a mail
+            var myhtml="";
+            if(fields.request_status==1){
+                myhtml= "<p>Il team di EasyFly è lieto di informarla che la sua richiesta di check-in online è andata a buon fine ed è stata accettata.</p><p>Le auguriamo una buona giornata ed un buon volo</p><p>Il team di EasyFly</p>";
+            }else{
+                myhtml= "<p>Il team di EasyFly è dispiaciuto di informarla che la sua richiesta di check-in online non è andata a buon fine.</p><p>Le auguriamo una buona giornata.</p><p>Il team di EasyFly</p>";
+            }
             var transporter = nodemailer.createTransport({  //create transporter to send email to users
                 service: 'gmail',
                 auth: {
@@ -91,7 +97,7 @@ router.post('/', async (req, res) => {
                 from: 'easyfly.ids2@gmail.com',
                 to: fields.email, 
                 subject: 'Esito richiesta check-in online',
-                html: "<p>Il team di EasyFly è lieto di informarla che la sua richiesta di check-in online è andata a buon fine ed è stata accettata.</p><p>Le auguriamo una buona giornata ed un buon volo</p><p>Il team di EasyFly</p>"
+                html: myhtml
             };
             transporter.sendMail(mailOptions, function(error, info){    //send email
                 if (error) {
@@ -101,22 +107,23 @@ router.post('/', async (req, res) => {
                 }
             });
         }
-        
-        var oldpath = files.filetoupload.filepath
-        let id = makeid(16);
-        let src = files.filetoupload.originalFilename;
-        let newpath = './static/documents/' + id + src.substring(src.lastIndexOf('.'));
-        let dbPath = './documents/' + id + src.substring(src.lastIndexOf('.'));
+        if(fields.document_type!=2 || fields.request_status==1){
+            var oldpath = files.filetoupload.filepath
+            let id = makeid(16);
+            let src = files.filetoupload.originalFilename;
+            let newpath = './static/documents/' + id + src.substring(src.lastIndexOf('.'));
+            let dbPath = './documents/' + id + src.substring(src.lastIndexOf('.'));
 
-        fs.rename(oldpath, newpath, function (err) {
-            if (err) throw err;
+            fs.rename(oldpath, newpath, function (err) {
+                if (err) throw err;
 
-            UpdateDocument(fields.uid, parseInt(fields.document_type), dbPath);
+                UpdateDocument(fields.uid, parseInt(fields.document_type), dbPath);
 
-            res.status(200).write("<html><head><link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../style.css\"></head> \
-            <body> <div class=\"flightsContainer\"><h1>Documenti salvati con successo!</h1> \
-            <a href='../../main_page'>Ok</a></body></a></html>");
-        });
+                res.status(200).write("<html><head><link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../style.css\"></head> \
+                <body> <div class=\"flightsContainer\"><h1>Documenti salvati con successo!</h1> \
+                <a href='../../main_page'>Ok</a></body></a></html>");
+            });
+        }
     });
 });
 

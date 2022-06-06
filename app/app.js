@@ -89,6 +89,7 @@ app.use("/flights_controller",function(req,res){
 
 app.use("/report_delay",function(req,res){
     var mypath = path.join(__dirname,"../html_notifications/report_delay.html");
+    res.sendFile(mypath);
 });
 
 //info volo

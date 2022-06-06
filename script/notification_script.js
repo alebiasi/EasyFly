@@ -42,9 +42,10 @@
             var td= document.createElement("td");
             var form = document.createElement("form");
             form.method="POST";
-            form.action="/report_delay";
+            form.action="/report_delay?flight_code="+flight.cod;
             var button = document.createElement("input");
             //button.onclick=send_report(window.localStorage.getItem("token"),flight.cod);
+            //button.onclick= function(){send_report(window.localStorage.getItem("token"),flight.cod);};
             button.type="submit";
             button.name="button_report_delay";
             button.value="Segnala ritardo"
@@ -56,7 +57,7 @@
             token.name="token";
             token.value=window.localStorage.getItem("token");
 
-            window.localStorage.setItem("flight_code",flight.cod+"");
+            //window.localStorage.setItem("flight_code",flight.cod+"");
 
 
             form.appendChild(token);
@@ -79,12 +80,15 @@
  * @returns true if everything went correctly, false otherwise
  */
 function send_report(){
+    const urlParams = new URLSearchParams(window.location.search);
+    var code = urlParams.get("flight_code");
+    console.log(code);
     var success=false;
     var delay_minutes = document.getElementById("delay_minutes").value; //get the delay value (here it cannot be null because of the required attribute)
     var data = {token:window.localStorage.getItem("token"),delay:delay_minutes};
     //send update request to api
     try{
-        fetch("/api/v2/flights/"+window.localStorage.getItem("flight_code"),{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
+        fetch("/api/v2/flights/"+code,{method:"PUT",headers: {'Content-Type': 'application/json',},body: JSON.stringify(data)})
         .then(window.localStorage.removeItem("flight_code")).then(success=true);
     }catch(error){
         //catch if there is an error

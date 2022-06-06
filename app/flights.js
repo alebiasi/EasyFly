@@ -30,7 +30,7 @@ router.get('/:id', async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
     let flight = await Flight.findById(req.params.id);
     res.status(200).json({
-        self: '/api/v1/flights/' + flight.id,
+        self: '/api/v1/flights/' + flight._id,
         cod: flight.cod,
         hour: flight.hour,
         company: flight.company,
@@ -43,9 +43,10 @@ router.get('/:id', async (req, res) => {
  * search by flight code instead of id
  */
 router.get("/flight_code/:code", async (req,res)=>{
-    let flight = await Flight.findOne({cod:req.params.code});
+    let flight = await Flight.find({cod:req.params.code});
+    console.log(flight);
     res.status(200).json({
-        self: '/api/v1/flights/' + flight.id,
+        self: '/api/v1/flights/' + flight._id,
         cod: flight.cod,
         hour: flight.hour,
         company: flight.company,
@@ -90,6 +91,7 @@ router.post('', async (req, res) => {
  */
 router.put("/:code",async function(req,res){
     var code = req.params.code; //flight code
+    console.log(code);
     try{
         var delay=req.body.delay; //delay minutes
         var request = await Flight.updateOne({"cod":code},{$set:{"delay":delay}}); //update entry
