@@ -160,12 +160,18 @@ function update_request(id,value,user_id,flight_code){  //update the status of a
                         time:data2.hour,
                     };
                     fetch("/api/v1/save_documents",{method:"POST",body:fd}) //send file
-                    .then(fetch("/api/v1/boarding_cards",{method:"POST",headers: {'Content-Type': 'application/json',},body:JSON.stringify(info_flight)}))
-                    .then(location.reload());
+                    .then(()=>{
+                        if(value==1)
+                            fetch("/api/v1/boarding_cards",{method:"POST",headers: {'Content-Type': 'application/json',},body:JSON.stringify(info_flight)}).then(location.reload());
+                        else
+                            location.reload();
+                    })/*.then(location.reload())*/;
+                    /*.then(fetch("/api/v1/boarding_cards",{method:"POST",headers: {'Content-Type': 'application/json',},body:JSON.stringify(info_flight)}))
+                    .then(location.reload());*/
                 });
                 
             });
-        });   
+        })/*.then(location.reload())*/;   
 };
 
 /**
