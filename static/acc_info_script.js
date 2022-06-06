@@ -23,10 +23,15 @@ function loadInformation(userId) {
     fetch('../api/v1/acc_information/' + userId, {
         method: 'GET',
     })
-    .then( resp => resp.json())
+    .then(function(resp) {
+        if(resp.status >= 400) {
+            document.getElementById('error1').hidden = false;
+        }
+        else {
+            return resp.json();
+        }
+    })
     .then( data => {
-
-        // console.log(data);
 
         return data.map( optInformation => {
             if(optInformation.pathology != "") {
