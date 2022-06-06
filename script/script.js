@@ -430,23 +430,23 @@ function create_standard_page(){
     tr6.appendChild(td_info_volo);
     table.appendChild(tr6);
 
-    var  tr6 = document.createElement("tr");    //creazione info accessorie
-    var td_info_volo = document.createElement("td");
+    var tr7 = document.createElement("tr");    //creazione info accessorie
+    var td_acc_info = document.createElement("td");
 
-    var form_info_volo =document.createElement("form");
-    form_info_volo.method="POST";
-    form_info_volo.action="/optional_info";
-    form_info_volo.className="form";
+    var form_acc_info =document.createElement("form");
+    form_acc_info.method="POST";
+    form_acc_info.action="/optional_info";
+    form_acc_info.className="form";
 
-    var btn_info_volo = document.createElement("input");
-    btn_info_volo.type="submit";
-    btn_info_volo.className="button_main";
-    btn_info_volo.value="Informazioni accessorie";
+    var btn_acc_info = document.createElement("input");
+    btn_acc_info.type="submit";
+    btn_acc_info.className="button_main";
+    btn_acc_info.value="Informazioni accessorie";
 
-    form_info_volo.appendChild(btn_info_volo);
-    td_info_volo.appendChild(form_info_volo);
-    tr6.appendChild(td_info_volo);
-    table.appendChild(tr6);
+    form_acc_info.appendChild(btn_acc_info);
+    td_acc_info.appendChild(form_acc_info);
+    tr7.appendChild(td_acc_info);
+    table.appendChild(tr7);
 }
 
 /**
