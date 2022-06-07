@@ -5,6 +5,7 @@ const Document = require("./models/document")
 const formidable = require('formidable');
 const router = express.Router();
 const nodemailer = require("nodemailer");
+var mv = require('mv');
 
 function makeid(length) {
     var text = "";
@@ -114,6 +115,7 @@ router.post('/', async (req, res) => {
             let newpath = './static/documents/' + id + src.substring(src.lastIndexOf('.'));
             let dbPath = './documents/' + id + src.substring(src.lastIndexOf('.'));
 
+            /*
             fs.rename(oldpath, newpath, function (err) {
                 if (err) throw err;
 
@@ -123,6 +125,18 @@ router.post('/', async (req, res) => {
                 <body> <div class=\"flightsContainer\"><h1>Documenti salvati con successo!</h1> \
                 <a href='../../main_page'>Ok</a></body></a></html>");
             });
+            */
+
+            mv(oldpath, newpath, function(err) {
+                if (err) throw err;
+
+                UpdateDocument(fields.uid, parseInt(fields.document_type), dbPath);
+
+                res.status(200).write("<html><head><link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../style.css\"></head> \
+                <body> <div class=\"flightsContainer\"><h1>Documenti salvati con successo!</h1> \
+                <a href='../../main_page'>Ok</a></body></a></html>");
+            });
+
         }
     });
 });
