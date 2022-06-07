@@ -1,5 +1,5 @@
 // For local boot, uncomment the next line
-require("dotenv").config();
+//require("dotenv").config();
 const app = require("./app/app.js");
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8080;
