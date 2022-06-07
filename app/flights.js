@@ -5,7 +5,6 @@ const Requests = require("./models/request");
 const User = require("./models/user");
 var nodemailer = require('nodemailer');
 const mongoose = require("mongoose");
-require("dotenv").config();
 /**
  * Resource representation based on the following the pattern: 
  * https://cloud.google.com/blog/products/application-development/api-design-why-you-should-use-links-not-keys-to-represent-relationships-in-apis
